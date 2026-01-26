@@ -1,0 +1,211 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix iwac: <https://islam.zmo.de/ontology/iwac#> .
+
+# ============================================
+# ONTOLOGY DECLARATION
+# ============================================
+
+iwac: a owl:Ontology ;
+    rdfs:label "IWAC Ontology"@en ;
+    rdfs:label "Ontologie IWAC"@fr ;
+    rdfs:comment "Vocabulary for the Islam West Africa Collection, covering AI processing provenance and sentiment analysis metadata"@en ;
+    rdfs:comment "Vocabulaire pour la Collection Islam Afrique de l'Ouest, couvrant la provenance du traitement IA et les métadonnées d'analyse de sentiment"@fr ;
+    dcterms:created "2026-01-26"^^xsd:date ;
+    dcterms:creator "Frédérick Madore" ;
+    owl:versionInfo "1.0" .
+
+# ============================================
+# AI PROVENANCE PROPERTIES
+# (Used as value annotations)
+# ============================================
+
+iwac:ocrModel a owl:DatatypeProperty ;
+    rdfs:label "OCR Model"@en ;
+    rdfs:label "Modèle OCR"@fr ;
+    rdfs:comment "AI model used for optical character recognition and text extraction"@en ;
+    rdfs:comment "Modèle d'IA utilisé pour la reconnaissance optique de caractères et l'extraction de texte"@fr ;
+    rdfs:range xsd:string .
+
+iwac:summaryModel a owl:DatatypeProperty ;
+    rdfs:label "Summary Model"@en ;
+    rdfs:label "Modèle de résumé"@fr ;
+    rdfs:comment "AI model used to generate summaries or descriptions"@en ;
+    rdfs:comment "Modèle d'IA utilisé pour générer des résumés ou descriptions"@fr ;
+    rdfs:range xsd:string .
+
+iwac:nerModel a owl:DatatypeProperty ;
+    rdfs:label "NER Model"@en ;
+    rdfs:label "Modèle NER"@fr ;
+    rdfs:comment "AI model used for named entity recognition"@en ;
+    rdfs:comment "Modèle d'IA utilisé pour la reconnaissance d'entités nommées"@fr ;
+    rdfs:range xsd:string .
+
+iwac:transcriptionModel a owl:DatatypeProperty ;
+    rdfs:label "Transcription Model"@en ;
+    rdfs:label "Modèle de transcription"@fr ;
+    rdfs:comment "AI model used for audio/video transcription"@en ;
+    rdfs:comment "Modèle d'IA utilisé pour la transcription audio/vidéo"@fr ;
+    rdfs:range xsd:string .
+
+iwac:processingDate a owl:DatatypeProperty ;
+    rdfs:label "Processing Date"@en ;
+    rdfs:label "Date de traitement"@fr ;
+    rdfs:comment "Date when AI processing was performed"@en ;
+    rdfs:comment "Date à laquelle le traitement IA a été effectué"@fr ;
+    rdfs:range xsd:date .
+
+iwac:confidence a owl:DatatypeProperty ;
+    rdfs:label "Confidence Score"@en ;
+    rdfs:label "Score de confiance"@fr ;
+    rdfs:comment "Confidence score of the AI model output (0-1)"@en ;
+    rdfs:comment "Score de confiance de la sortie du modèle IA (0-1)"@fr ;
+    rdfs:range xsd:decimal .
+
+iwac:modelVersion a owl:DatatypeProperty ;
+    rdfs:label "Model Version"@en ;
+    rdfs:label "Version du modèle"@fr ;
+    rdfs:comment "Specific version of the AI model used"@en ;
+    rdfs:comment "Version spécifique du modèle IA utilisé"@fr ;
+    rdfs:range xsd:string .
+
+# ============================================
+# GEMINI SENTIMENT PROPERTIES
+# ============================================
+
+iwac:geminiCentralite a owl:DatatypeProperty ;
+    rdfs:label "Gemini - Centrality"@en ;
+    rdfs:label "Gemini - Centralité"@fr ;
+    rdfs:comment "Level of centrality of Islam/Muslims according to Gemini"@en ;
+    rdfs:comment "Niveau de centralité de l'islam/musulmans selon Gemini"@fr ;
+    rdfs:range xsd:string .
+
+iwac:geminiCentraliteJustification a owl:DatatypeProperty ;
+    rdfs:label "Gemini - Centrality Justification"@en ;
+    rdfs:label "Gemini - Justification centralité"@fr ;
+    rdfs:comment "Gemini's explanation for the assigned centrality level"@en ;
+    rdfs:comment "Explication de Gemini pour le niveau de centralité attribué"@fr ;
+    rdfs:range xsd:string .
+
+iwac:geminiPolarite a owl:DatatypeProperty ;
+    rdfs:label "Gemini - Polarity"@en ;
+    rdfs:label "Gemini - Polarité"@fr ;
+    rdfs:comment "Sentiment toward Islam/Muslims according to Gemini"@en ;
+    rdfs:comment "Sentiment envers l'islam/musulmans selon Gemini"@fr ;
+    rdfs:range xsd:string .
+
+iwac:geminiPolariteJustification a owl:DatatypeProperty ;
+    rdfs:label "Gemini - Polarity Justification"@en ;
+    rdfs:label "Gemini - Justification polarité"@fr ;
+    rdfs:comment "Gemini's explanation for the assigned polarity"@en ;
+    rdfs:comment "Explication de Gemini pour la polarité attribuée"@fr ;
+    rdfs:range xsd:string .
+
+iwac:geminiSubjectiviteScore a owl:DatatypeProperty ;
+    rdfs:label "Gemini - Subjectivity Score"@en ;
+    rdfs:label "Gemini - Score subjectivité"@fr ;
+    rdfs:comment "Subjectivity score (1-5) according to Gemini"@en ;
+    rdfs:comment "Score de subjectivité (1-5) selon Gemini"@fr ;
+    rdfs:range xsd:integer .
+
+iwac:geminiSubjectiviteJustification a owl:DatatypeProperty ;
+    rdfs:label "Gemini - Subjectivity Justification"@en ;
+    rdfs:label "Gemini - Justification subjectivité"@fr ;
+    rdfs:comment "Gemini's explanation for the subjectivity score"@en ;
+    rdfs:comment "Explication de Gemini pour le score de subjectivité"@fr ;
+    rdfs:range xsd:string .
+
+# ============================================
+# CHATGPT SENTIMENT PROPERTIES
+# ============================================
+
+iwac:chatgptCentralite a owl:DatatypeProperty ;
+    rdfs:label "ChatGPT - Centrality"@en ;
+    rdfs:label "ChatGPT - Centralité"@fr ;
+    rdfs:comment "Level of centrality of Islam/Muslims according to ChatGPT"@en ;
+    rdfs:comment "Niveau de centralité de l'islam/musulmans selon ChatGPT"@fr ;
+    rdfs:range xsd:string .
+
+iwac:chatgptCentraliteJustification a owl:DatatypeProperty ;
+    rdfs:label "ChatGPT - Centrality Justification"@en ;
+    rdfs:label "ChatGPT - Justification centralité"@fr ;
+    rdfs:comment "ChatGPT's explanation for the assigned centrality level"@en ;
+    rdfs:comment "Explication de ChatGPT pour le niveau de centralité attribué"@fr ;
+    rdfs:range xsd:string .
+
+iwac:chatgptPolarite a owl:DatatypeProperty ;
+    rdfs:label "ChatGPT - Polarity"@en ;
+    rdfs:label "ChatGPT - Polarité"@fr ;
+    rdfs:comment "Sentiment toward Islam/Muslims according to ChatGPT"@en ;
+    rdfs:comment "Sentiment envers l'islam/musulmans selon ChatGPT"@fr ;
+    rdfs:range xsd:string .
+
+iwac:chatgptPolariteJustification a owl:DatatypeProperty ;
+    rdfs:label "ChatGPT - Polarity Justification"@en ;
+    rdfs:label "ChatGPT - Justification polarité"@fr ;
+    rdfs:comment "ChatGPT's explanation for the assigned polarity"@en ;
+    rdfs:comment "Explication de ChatGPT pour la polarité attribuée"@fr ;
+    rdfs:range xsd:string .
+
+iwac:chatgptSubjectiviteScore a owl:DatatypeProperty ;
+    rdfs:label "ChatGPT - Subjectivity Score"@en ;
+    rdfs:label "ChatGPT - Score subjectivité"@fr ;
+    rdfs:comment "Subjectivity score (1-5) according to ChatGPT"@en ;
+    rdfs:comment "Score de subjectivité (1-5) selon ChatGPT"@fr ;
+    rdfs:range xsd:integer .
+
+iwac:chatgptSubjectiviteJustification a owl:DatatypeProperty ;
+    rdfs:label "ChatGPT - Subjectivity Justification"@en ;
+    rdfs:label "ChatGPT - Justification subjectivité"@fr ;
+    rdfs:comment "ChatGPT's explanation for the subjectivity score"@en ;
+    rdfs:comment "Explication de ChatGPT pour le score de subjectivité"@fr ;
+    rdfs:range xsd:string .
+
+# ============================================
+# MISTRAL SENTIMENT PROPERTIES
+# ============================================
+
+iwac:mistralCentralite a owl:DatatypeProperty ;
+    rdfs:label "Mistral - Centrality"@en ;
+    rdfs:label "Mistral - Centralité"@fr ;
+    rdfs:comment "Level of centrality of Islam/Muslims according to Mistral"@en ;
+    rdfs:comment "Niveau de centralité de l'islam/musulmans selon Mistral"@fr ;
+    rdfs:range xsd:string .
+
+iwac:mistralCentraliteJustification a owl:DatatypeProperty ;
+    rdfs:label "Mistral - Centrality Justification"@en ;
+    rdfs:label "Mistral - Justification centralité"@fr ;
+    rdfs:comment "Mistral's explanation for the assigned centrality level"@en ;
+    rdfs:comment "Explication de Mistral pour le niveau de centralité attribué"@fr ;
+    rdfs:range xsd:string .
+
+iwac:mistralPolarite a owl:DatatypeProperty ;
+    rdfs:label "Mistral - Polarity"@en ;
+    rdfs:label "Mistral - Polarité"@fr ;
+    rdfs:comment "Sentiment toward Islam/Muslims according to Mistral"@en ;
+    rdfs:comment "Sentiment envers l'islam/musulmans selon Mistral"@fr ;
+    rdfs:range xsd:string .
+
+iwac:mistralPolariteJustification a owl:DatatypeProperty ;
+    rdfs:label "Mistral - Polarity Justification"@en ;
+    rdfs:label "Mistral - Justification polarité"@fr ;
+    rdfs:comment "Mistral's explanation for the assigned polarity"@en ;
+    rdfs:comment "Explication de Mistral pour la polarité attribuée"@fr ;
+    rdfs:range xsd:string .
+
+iwac:mistralSubjectiviteScore a owl:DatatypeProperty ;
+    rdfs:label "Mistral - Subjectivity Score"@en ;
+    rdfs:label "Mistral - Score subjectivité"@fr ;
+    rdfs:comment "Subjectivity score (1-5) according to Mistral"@en ;
+    rdfs:comment "Score de subjectivité (1-5) selon Mistral"@fr ;
+    rdfs:range xsd:integer .
+
+iwac:mistralSubjectiviteJustification a owl:DatatypeProperty ;
+    rdfs:label "Mistral - Subjectivity Justification"@en ;
+    rdfs:label "Mistral - Justification subjectivité"@fr ;
+    rdfs:comment "Mistral's explanation for the subjectivity score"@en ;
+    rdfs:comment "Explication de Mistral pour le score de subjectivité"@fr ;
+    rdfs:range xsd:string .
