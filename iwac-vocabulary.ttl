@@ -104,12 +104,11 @@ iwac:geminiPolariteJustification a owl:DatatypeProperty ;
     rdfs:comment "Explication de Gemini pour la polarité attribuée"@fr ;
     rdfs:range xsd:string .
 
-iwac:geminiSubjectiviteScore a owl:DatatypeProperty ;
+iwac:geminiSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Gemini - Subjectivity Score"@en ;
     rdfs:label "Gemini - Score subjectivité"@fr ;
-    rdfs:comment "Subjectivity score (1-5) according to Gemini"@en ;
-    rdfs:comment "Score de subjectivité (1-5) selon Gemini"@fr ;
-    rdfs:range xsd:integer .
+    rdfs:comment "Subjectivity level (1-5) according to Gemini, linked to controlled vocabulary item"@en ;
+    rdfs:comment "Niveau de subjectivité (1-5) selon Gemini, lié à un élément de vocabulaire contrôlé"@fr .
 
 iwac:geminiSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemini - Subjectivity Justification"@en ;
@@ -150,12 +149,11 @@ iwac:chatgptPolariteJustification a owl:DatatypeProperty ;
     rdfs:comment "Explication de ChatGPT pour la polarité attribuée"@fr ;
     rdfs:range xsd:string .
 
-iwac:chatgptSubjectiviteScore a owl:DatatypeProperty ;
+iwac:chatgptSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "ChatGPT - Subjectivity Score"@en ;
     rdfs:label "ChatGPT - Score subjectivité"@fr ;
-    rdfs:comment "Subjectivity score (1-5) according to ChatGPT"@en ;
-    rdfs:comment "Score de subjectivité (1-5) selon ChatGPT"@fr ;
-    rdfs:range xsd:integer .
+    rdfs:comment "Subjectivity level (1-5) according to ChatGPT, linked to controlled vocabulary item"@en ;
+    rdfs:comment "Niveau de subjectivité (1-5) selon ChatGPT, lié à un élément de vocabulaire contrôlé"@fr .
 
 iwac:chatgptSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "ChatGPT - Subjectivity Justification"@en ;
@@ -196,12 +194,11 @@ iwac:mistralPolariteJustification a owl:DatatypeProperty ;
     rdfs:comment "Explication de Mistral pour la polarité attribuée"@fr ;
     rdfs:range xsd:string .
 
-iwac:mistralSubjectiviteScore a owl:DatatypeProperty ;
+iwac:mistralSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Mistral - Subjectivity Score"@en ;
     rdfs:label "Mistral - Score subjectivité"@fr ;
-    rdfs:comment "Subjectivity score (1-5) according to Mistral"@en ;
-    rdfs:comment "Score de subjectivité (1-5) selon Mistral"@fr ;
-    rdfs:range xsd:integer .
+    rdfs:comment "Subjectivity level (1-5) according to Mistral, linked to controlled vocabulary item"@en ;
+    rdfs:comment "Niveau de subjectivité (1-5) selon Mistral, lié à un élément de vocabulaire contrôlé"@fr .
 
 iwac:mistralSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral - Subjectivity Justification"@en ;
