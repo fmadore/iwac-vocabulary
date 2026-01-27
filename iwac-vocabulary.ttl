@@ -24,50 +24,50 @@ iwac: a owl:Ontology ;
 # ============================================
 
 iwac:ocrModel a owl:DatatypeProperty ;
-    rdfs:label "OCR Model"@en ;
-    rdfs:label "Modèle OCR"@fr ;
+    rdfs:label "AI Model - OCR"@en ;
+    rdfs:label "Modèle IA - OCR"@fr ;
     rdfs:comment "AI model used for optical character recognition and text extraction"@en ;
     rdfs:comment "Modèle d'IA utilisé pour la reconnaissance optique de caractères et l'extraction de texte"@fr ;
     rdfs:range xsd:string .
 
 iwac:summaryModel a owl:DatatypeProperty ;
-    rdfs:label "Summary Model"@en ;
-    rdfs:label "Modèle de résumé"@fr ;
+    rdfs:label "AI Model - Summary"@en ;
+    rdfs:label "Modèle IA - Résumé"@fr ;
     rdfs:comment "AI model used to generate summaries or descriptions"@en ;
     rdfs:comment "Modèle d'IA utilisé pour générer des résumés ou descriptions"@fr ;
     rdfs:range xsd:string .
 
 iwac:nerModel a owl:DatatypeProperty ;
-    rdfs:label "NER Model"@en ;
-    rdfs:label "Modèle NER"@fr ;
+    rdfs:label "AI Model - NER"@en ;
+    rdfs:label "Modèle IA - NER"@fr ;
     rdfs:comment "AI model used for named entity recognition"@en ;
     rdfs:comment "Modèle d'IA utilisé pour la reconnaissance d'entités nommées"@fr ;
     rdfs:range xsd:string .
 
 iwac:transcriptionModel a owl:DatatypeProperty ;
-    rdfs:label "Transcription Model"@en ;
-    rdfs:label "Modèle de transcription"@fr ;
+    rdfs:label "AI Model - Transcription"@en ;
+    rdfs:label "Modèle IA - Transcription"@fr ;
     rdfs:comment "AI model used for audio/video transcription"@en ;
     rdfs:comment "Modèle d'IA utilisé pour la transcription audio/vidéo"@fr ;
     rdfs:range xsd:string .
 
 iwac:processingDate a owl:DatatypeProperty ;
-    rdfs:label "Processing Date"@en ;
-    rdfs:label "Date de traitement"@fr ;
+    rdfs:label "AI Processing Date"@en ;
+    rdfs:label "Date de traitement IA"@fr ;
     rdfs:comment "Date when AI processing was performed"@en ;
     rdfs:comment "Date à laquelle le traitement IA a été effectué"@fr ;
     rdfs:range xsd:date .
 
 iwac:confidence a owl:DatatypeProperty ;
-    rdfs:label "Confidence Score"@en ;
-    rdfs:label "Score de confiance"@fr ;
+    rdfs:label "AI Confidence Score"@en ;
+    rdfs:label "Score de confiance IA"@fr ;
     rdfs:comment "Confidence score of the AI model output (0-1)"@en ;
     rdfs:comment "Score de confiance de la sortie du modèle IA (0-1)"@fr ;
     rdfs:range xsd:decimal .
 
 iwac:modelVersion a owl:DatatypeProperty ;
-    rdfs:label "Model Version"@en ;
-    rdfs:label "Version du modèle"@fr ;
+    rdfs:label "AI Model Version"@en ;
+    rdfs:label "Version du modèle IA"@fr ;
     rdfs:comment "Specific version of the AI model used"@en ;
     rdfs:comment "Version spécifique du modèle IA utilisé"@fr ;
     rdfs:range xsd:string .
