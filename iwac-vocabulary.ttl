@@ -73,8 +73,35 @@ iwac:modelVersion a owl:DatatypeProperty ;
     rdfs:range xsd:string .
 
 # ============================================
-# GEMINI SENTIMENT PROPERTIES
+# SENTIMENT PROPERTIES — GENERATION 1 (2026-01/02)
 # ============================================
+#
+# These property sets are keyed by VENDOR (gemini / chatgpt / mistral) and
+# carry no iwac:*Model value annotation, so the property name alone cannot say
+# which model produced a value. The corpus was annotated in January-February
+# 2026 (campaign window verified from o:modified on the annotated items), when
+# the pipeline used:
+#
+#   iwac:gemini*   -> gemini-3-flash-preview   ("Gemini 3 Flash")
+#   iwac:chatgpt*  -> gpt-5-mini               ("GPT-5 mini")
+#   iwac:mistral*  -> ministral-14b-2512       ("Ministral 3 14B")
+#
+# On Hugging Face these are exported with column prefixes built from the exact
+# model id (gemini_3_flash_preview_, gpt_5_mini_, ministral_14b_2512_) rather
+# than vendor names, so a later generation cannot silently overwrite the
+# meaning of a column.
+#
+# The three did NOT share a run configuration (commit 07fb007, 2026-01-27):
+#   gemini-3-flash-preview  temperature 0.2, response schema, no thinking level
+#   gpt-5-mini              response schema only, no temperature, no reasoning
+#   ministral-14b-2512      temperature 0.2, response schema, max_tokens 512
+# No model in the generation-1 campaign ran with a reasoning/thinking parameter.
+#
+# Later generations MUST define new property sets named for the model, never
+# reuse these. See iwac_common/sentiment_panel.py in the IWAC-Hugging-Face
+# repository for the canonical panel definition.
+
+# --- Gemini 3 Flash (gemini-3-flash-preview) ---
 
 iwac:geminiCentralite a owl:DatatypeProperty ;
     rdfs:label "Gemini - Centrality"@en ;
@@ -117,9 +144,7 @@ iwac:geminiSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:comment "Explication de Gemini pour le score de subjectivité"@fr ;
     rdfs:range xsd:string .
 
-# ============================================
-# CHATGPT SENTIMENT PROPERTIES
-# ============================================
+# --- GPT-5 mini (gpt-5-mini) ---
 
 iwac:chatgptCentralite a owl:DatatypeProperty ;
     rdfs:label "ChatGPT - Centrality"@en ;
@@ -162,9 +187,7 @@ iwac:chatgptSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:comment "Explication de ChatGPT pour le score de subjectivité"@fr ;
     rdfs:range xsd:string .
 
-# ============================================
-# MISTRAL SENTIMENT PROPERTIES
-# ============================================
+# --- Ministral 3 14B (ministral-14b-2512) ---
 
 iwac:mistralCentralite a owl:DatatypeProperty ;
     rdfs:label "Mistral - Centrality"@en ;

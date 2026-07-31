@@ -7,7 +7,7 @@ RDF vocabulary for the [Islam West Africa Collection (IWAC)](https://islam.zmo.d
 This vocabulary provides properties for:
 
 - **AI Processing Provenance**: Track which AI models generated specific metadata (OCR, summaries, named entity recognition)
-- **Sentiment Analysis**: Store multi-model sentiment analysis results (Gemini, ChatGPT, Mistral)
+- **Sentiment Analysis**: Store multi-model sentiment analysis results, one property set per annotator model
 
 ## Vocabulary Details
 
@@ -36,7 +36,7 @@ Used as value annotations to document which AI model generated specific metadata
 
 ### Sentiment Analysis (18 properties)
 
-Each of three AI models (Gemini, ChatGPT, Mistral) has 6 properties:
+Each annotator model has 6 properties:
 
 | Property Pattern | Description |
 |------------------|-------------|
@@ -46,6 +46,35 @@ Each of three AI models (Gemini, ChatGPT, Mistral) has 6 properties:
 | `iwac:{model}PolariteJustification` | Explanation for polarity rating |
 | `iwac:{model}SubjectiviteScore` | Subjectivity score (1-5) |
 | `iwac:{model}SubjectiviteJustification` | Explanation for subjectivity score |
+
+#### Which model produced which values
+
+The generation-1 property sets are keyed by **vendor**, and sentiment values
+carry no `iwac:*Model` annotation — so the property name alone does not identify
+the model. The corpus was annotated in January–February 2026 (campaign window
+verified from `o:modified`) by:
+
+| Property prefix | Model | Hugging Face column prefix |
+|---|---|---|
+| `iwac:gemini*` | `gemini-3-flash-preview` (Gemini 3 Flash) | `gemini_3_flash_preview_` |
+| `iwac:chatgpt*` | `gpt-5-mini` (GPT-5 mini) | `gpt_5_mini_` |
+| `iwac:mistral*` | `ministral-14b-2512` (Ministral 3 14B) | `ministral_14b_2512_` |
+
+On Hugging Face the columns are keyed by the **exact model id** (hyphens and
+dots folded to underscores), not the vendor, so a later generation cannot
+silently redefine what a column means.
+
+The three models did not share a run configuration. Reproducing a value needs:
+`gemini-3-flash-preview` — temperature 0.2, response schema, no thinking level;
+`gpt-5-mini` — response schema only, no temperature, no reasoning effort;
+`ministral-14b-2512` — temperature 0.2, response schema, **max_tokens 512**.
+No model in the generation-1 campaign ran with any reasoning or thinking parameter.
+
+> **Adding a model:** define a new property set named for the model
+> (`iwac:mistralSmall4Centralite`, …). Never reuse a vendor slot for a different
+> model — that is what made generation 1 ambiguous. The canonical panel lives in
+> [`iwac_common/sentiment_panel.py`](https://github.com/fmadore/IWAC-Hugging-Face)
+> in the Hugging Face export repository.
 
 ## Usage with Omeka S
 
