@@ -382,48 +382,6 @@ iwac:mistralSmall2603SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:range xsd:string .
 
 
-# --- Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b) -> HF prefix qwen3_5_122b_a10b_ ---
-
-iwac:qwen35A10bCentralite a owl:ObjectProperty ;
-    rdfs:label "Qwen3.5 122B-A10B - Centrality"@en ;
-    rdfs:label "Qwen3.5 122B-A10B - Centralité"@fr ;
-    rdfs:comment "Level of centrality of Islam/Muslims according to Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b)"@en ;
-    rdfs:comment "Niveau de centralité de l'islam/musulmans selon Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b)"@fr .
-
-iwac:qwen35A10bCentraliteJustification a owl:DatatypeProperty ;
-    rdfs:label "Qwen3.5 122B-A10B - Centrality Justification"@en ;
-    rdfs:label "Qwen3.5 122B-A10B - Justification centralité"@fr ;
-    rdfs:comment "Qwen3.5 122B-A10B's explanation for the assigned centrality level"@en ;
-    rdfs:comment "Explication de Qwen3.5 122B-A10B pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
-
-iwac:qwen35A10bPolarite a owl:ObjectProperty ;
-    rdfs:label "Qwen3.5 122B-A10B - Polarity"@en ;
-    rdfs:label "Qwen3.5 122B-A10B - Polarité"@fr ;
-    rdfs:comment "Sentiment toward Islam/Muslims according to Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b)"@en ;
-    rdfs:comment "Sentiment envers l'islam/musulmans selon Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b)"@fr .
-
-iwac:qwen35A10bPolariteJustification a owl:DatatypeProperty ;
-    rdfs:label "Qwen3.5 122B-A10B - Polarity Justification"@en ;
-    rdfs:label "Qwen3.5 122B-A10B - Justification polarité"@fr ;
-    rdfs:comment "Qwen3.5 122B-A10B's explanation for the assigned polarity"@en ;
-    rdfs:comment "Explication de Qwen3.5 122B-A10B pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
-
-iwac:qwen35A10bSubjectiviteScore a owl:ObjectProperty ;
-    rdfs:label "Qwen3.5 122B-A10B - Subjectivity Score"@en ;
-    rdfs:label "Qwen3.5 122B-A10B - Score subjectivité"@fr ;
-    rdfs:comment "Labelled subjectivity level according to Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b), linked to controlled vocabulary item"@en ;
-    rdfs:comment "Niveau de subjectivité libellé selon Qwen3.5 122B-A10B (qwen/qwen3.5-122b-a10b), lié à un élément de vocabulaire contrôlé"@fr .
-
-iwac:qwen35A10bSubjectiviteJustification a owl:DatatypeProperty ;
-    rdfs:label "Qwen3.5 122B-A10B - Subjectivity Justification"@en ;
-    rdfs:label "Qwen3.5 122B-A10B - Justification subjectivité"@fr ;
-    rdfs:comment "Qwen3.5 122B-A10B's explanation for the subjectivity score"@en ;
-    rdfs:comment "Explication de Qwen3.5 122B-A10B pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
-
-
 # --- DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731) -> HF prefix deepseek_v4_flash_0731_ ---
 
 iwac:deepseekV4Flash0731Centralite a owl:ObjectProperty ;
