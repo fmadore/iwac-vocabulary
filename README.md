@@ -35,7 +35,7 @@ Used as value annotations to document which AI model generated specific metadata
 | `iwac:confidence` | Confidence score (0-1) |
 | `iwac:modelVersion` | Specific version of the AI model |
 
-### Sentiment Analysis (54 properties)
+### Sentiment Analysis (24 properties)
 
 Each annotator model has 6 properties:
 
@@ -48,10 +48,11 @@ Each annotator model has 6 properties:
 | `iwac:{model}SubjectiviteScore` | Subjectivity level — a 1–5 integer in generation 1, a label in generation 2 |
 | `iwac:{model}SubjectiviteJustification` | Explanation for subjectivity score |
 
-Two generations of property sets coexist. They are never mixed: a run writes to
-one generation's properties and leaves the other's values exactly as they are.
+**Only generation 2 remains.** The vendor-keyed generation-1 sets and the
+retired DeepSeek preview were emptied on the live archive on 2026-08-07 and
+dropped from this file; see [Generation 1](#generation-1-januaryfebruary-2026--archived-on-hugging-face) below for where that campaign now lives.
 
-#### Generation 2 (2026-07 onwards) — 36 properties
+#### Generation 2 (2026-07 onwards) — 24 properties
 
 Keyed by **model**. The property name *is* the provenance, and it has to be:
 Omeka does not index value annotations, so a model recorded only in an
@@ -65,61 +66,60 @@ current pipeline does not write it.
 | `iwac:gemini35FlashLite*` | `gemini-3.5-flash-lite` | 79617 | `gemini_3_5_flash_lite_` |
 | `iwac:gpt56Luna*` | `gpt-5.6-luna` | 79610 | `gpt_5_6_luna_` |
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
-| `iwac:qwen35A10b*` | `qwen/qwen3.5-122b-a10b` | 79616 | `qwen3_5_122b_a10b_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
 
-**Retired but populated (6 properties).** `iwac:deepseekV4Flash*`
-(`deepseek/deepseek-v4-flash`, item 79613, HF prefix `deepseek_v4_flash_`) holds
-a completed preview-era run — 11,482 articles — from before the slot was pinned
-to the dated `0731` snapshot. It stays declared here and is never repointed, so
-those values keep naming the exact model that produced them. `RETIRED_PANEL` in
-`sentiment_core.py` is the source for this block, and `00_setup_properties.py`
-emits it alongside the active panel: a generator that emitted only the live
-panel would turn every panel revision into a silent proposal to delete its
-predecessor's values.
-
 Every member is its vendor's **high-volume tier**, which is what makes the panel
-a panel rather than a quality ladder. **Three of the five are open weights** and
-can be re-run locally — Mistral Small 4 and Qwen3.5 under Apache-2.0, DeepSeek
-V4 Flash under MIT — with active parameter counts of 6.5B, 10B and 13B, inside a
-factor of two of each other. For an archive that is the difference between an
-annotation you can cite and one that can only be taken on trust.
+a panel rather than a quality ladder. **Two of the four are open weights** and
+can be re-run locally — Mistral Small 4 under Apache-2.0, DeepSeek V4 Flash under
+MIT — at 6.5B and 13B active parameters. For an archive that is the difference
+between an annotation you can cite and one that can only be taken on trust.
 
-Two slots were re-pointed on 2026-07-31 before anything was written to either:
-`iwac:qwen35A3b*` (3B active, a quarter of the panel's other open-weights
+`Centralite`, `Polarite` and `SubjectiviteScore` are `owl:ObjectProperty` here,
+which is what the pipeline actually writes — links into the controlled
+vocabulary, not strings. The generation-1 declarations called two of the three
+`owl:DatatypeProperty`, which never matched.
+
+Four slots were declared and never written, and are removed by the 2026-08-07
+upload: `iwac:qwen35A3b*` (3B active, a quarter of the other open-weights
 members) and `iwac:gemini36Flash*` (at $1.50/$7.50 per 1M, five to seventeen
 times the rest — an inter-model disagreement involving it could always be read
 as "the expensive model knows better" rather than as two readings of the
-construct). Both were dropped from this file at the time but survived in the
-live vocabulary until 2026-08-03, because removing a property needs an admin-UI
-upload and none had happened since. Their twelve properties were re-verified
-empty and are removed by that upload.
+construct), both re-pointed on 2026-07-31; then `iwac:qwen35A10b*`, dropped
+2026-08-05 on serving grounds — OpenRouter listed five endpoints for it against
+DeepSeek's 22, one without structured-output support, putting its median call at
+104 s where the rest of the panel sat at 4–6 s.
 
-Unlike generation 1, `Centralite` and `Polarite` are declared
-`owl:ObjectProperty` here, which is what the pipeline has always actually
-written — links into the controlled vocabulary, not strings.
+`iwac:gemini35FlashLite*` is declared and still holds **zero** values: it is the
+one active member not yet run.
 
-#### Generation 1 (January–February 2026) — 18 properties
+#### Generation 1 (January–February 2026) — archived on Hugging Face
 
-Keyed by **vendor**, and the values carry no `iwac:*Model` annotation — so the
-property name alone does not identify the model. The campaign window was
-verified from `o:modified`; the models were recovered from commit `07fb007`:
+Keyed by **vendor**, and the values carried no `iwac:*Model` annotation — so the
+property name alone did not identify the model. **Deleted from Omeka on
+2026-08-07** (all 18 verified at 0 items) after the values were confirmed present
+on the Hugging Face full mirror, which is now their only copy:
 
-| Property prefix | Model | Hugging Face column prefix |
+| Former property prefix | Model | Hugging Face column prefix |
 |---|---|---|
 | `iwac:gemini*` | `gemini-3-flash-preview` (Gemini 3 Flash) | `gemini_3_flash_preview_` |
 | `iwac:chatgpt*` | `gpt-5-mini` (GPT-5 mini) | `gpt_5_mini_` |
 | `iwac:mistral*` | `ministral-14b-2512` (Ministral 3 14B) | `ministral_14b_2512_` |
 
-On Hugging Face the columns are keyed by the **exact model id** (hyphens and
-dots folded to underscores), not the vendor, so a later generation cannot
-silently redefine what a column means.
+Those columns are frozen in the uploader's panel with `omeka_prefix=None`, so
+`hub_merge` preserves what the uploader no longer emits. Nothing re-derives them.
 
-The three models did not share a run configuration. Reproducing a value needs:
-`gemini-3-flash-preview` — temperature 0.2, response schema, no thinking level;
-`gpt-5-mini` — response schema only, no temperature, no reasoning effort;
-`ministral-14b-2512` — temperature 0.2, response schema, **max_tokens 512**.
-No model in the generation-1 campaign ran with any reasoning or thinking parameter.
+The three models did not share a run configuration, and reading the archived
+columns needs it: `gemini-3-flash-preview` — temperature 0.2, response schema, no
+thinking level; `gpt-5-mini` — response schema only, no temperature, no reasoning
+effort; `ministral-14b-2512` — temperature 0.2, response schema, **max_tokens
+512**, the only model with an output cap. No model in the campaign ran with any
+reasoning or thinking parameter. The campaign window was verified from
+`o:modified` and the models recovered from commit `07fb007`.
+
+`iwac:deepseekV4Flash*` (the April preview, item 79613) was deleted the same day.
+Its 11,482 annotations were never exported to Hugging Face and are gone — a
+deliberate choice, and not to be confused with `iwac:deepseekV4Flash0731*`, which
+is a different run rather than a newer copy of the same one.
 
 > **Adding a model:** define a new property set named for the model, never for
 > its vendor — reusing a vendor slot is what made generation 1 ambiguous. Do not
@@ -169,8 +169,9 @@ would delete, **counts the values that would be destroyed** — refusing if any 
 non-empty. It checks rather than offering an override flag, because an operator
 asserting "those are empty" is the step that gets skipped on the day it is
 wrong. Retiring a never-used property is legitimate and the pre-flight will pass
-it; it happened twice when the panel was revised on 2026-07-31 (the Qwen slot, then
-the Gemini one), each time verifying 6 doomed properties held nothing.
+it. The 2026-08-07 upload is the largest such case so far: **42 deletions, 0
+additions**, every one re-verified empty first — 18 generation-1, 6 preview, 18
+never-written. The pre-flight and an independent count agreed before it ran.
 
 > **The pre-flight is blind to value annotations.** It counts with Omeka's
 > `property[type]=ex` item filter, which does not see annotation values — the
