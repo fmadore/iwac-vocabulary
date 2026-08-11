@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: >-
+  If you reuse this vocabulary, or cite metadata annotated with it,
+  please cite the repository as below.
+title: "IWAC Vocabulary"
+version: "1.2"
+date-released: 2026-08-11
+abstract: >-
+  An RDF vocabulary for recording AI processing provenance and multi-model
+  sentiment annotation in a digital archive. It defines value-annotation
+  properties naming the model behind an OCR pass, summary, transcription or
+  named-entity run, and a model-keyed property set that stores the centrality,
+  polarity and subjectivity readings of a panel of large language models
+  side by side rather than collapsing them into one score. Built for the Islam
+  West Africa Collection (IWAC) on Omeka S, and reusable by any collection that
+  needs to say which model produced which value.
+type: dataset
+keywords:
+  - RDF vocabulary
+  - ontology
+  - Omeka S
+  - digital humanities
+  - Islam West Africa
+  - large language models
+  - sentiment analysis
+  - provenance
+  - digital archives
+  - African studies
+license: CC0-1.0
+repository-code: https://github.com/fmadore/iwac-vocabulary
+url: https://islam.zmo.de/s/westafrica/
+authors:
+  - family-names: Madore
+    given-names: Frédérick
+    orcid: https://orcid.org/0000-0003-0959-2092
+    affiliation: University of Bayreuth
