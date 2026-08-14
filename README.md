@@ -19,15 +19,21 @@ This vocabulary provides properties for:
 | **Languages** | English, French |
 | **Version** | 1.3 (`owl:versionInfo`), modified 2026-08-14 |
 | **Properties in this file** | **32** — 8 provenance + 24 sentiment |
-| **Properties installed on `islam.zmo.de`** | **74** (vocabulary 10) |
+| **Properties installed on `islam.zmo.de`** | **80** (vocabulary 10) |
 
-> **The file and the live archive have not converged yet.** `iwac-vocabulary.ttl`
+> **The file and the live archive have still not converged, and the 2026-08-14
+> upload shows why: Omeka applied the additions and not the deletions.** The file
 > was trimmed to 32 properties on 2026-08-07 and its Google slot re-pointed to
-> Gemma 4 31B on 2026-08-14; neither *vocabulary update* has been performed, so
-> Omeka still declares all 74 and none of Gemma's six. The 48 surplus
-> declarations are empty shells — the generation-1 values were deleted
-> separately through the item API, the rest were never written, and every one is
-> verified at 0 items. See
+> Gemma 4 31B on 2026-08-14. Uploading it added Gemma's six — 74 → **80** — while
+> all 48 properties the file omits stayed installed. Do not read a green
+> pre-flight as a promise that they will go; plan on removing them separately, or
+> on their staying.
+>
+> That is cosmetic, not a data problem. Every one of the 48 is verified at **0
+> items**: the generation-1 values were deleted separately through the item API,
+> and the rest were never written. Nothing reads them, and the pipeline resolves
+> only the 25 terms it needs. The one real consequence is that a property list
+> read from the live API is not the vocabulary this file describes. See
 > [Updating an already-imported vocabulary](#updating-an-already-imported-vocabulary).
 >
 > Counts below verified against the live API on **2026-08-14**.
@@ -88,7 +94,7 @@ current pipeline does not write it.
 | `iwac:gpt56Luna*` | `gpt-5.6-luna` | 79610 | `gpt_5_6_luna_` |
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
-| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (declared here, not yet installed) |
+| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (first run in progress; no column yet) |
 
 ##### Population (live, 2026-08-14)
 
@@ -102,7 +108,7 @@ confident but unusable output for them rather than failing visibly.
 | `iwac:gpt56Luna*` | 12,305 | 12,305 | **12,015** | 12,305 / 12,305 / 12,305 |
 | `iwac:mistralSmall2603*` | 12,305 | 12,305 | **12,051** | 12,305 / 12,305 / 12,305 |
 | `iwac:deepseekV4Flash0731*` | 12,305 | 12,305 | **11,816** | 12,305 / 12,305 / 12,304 |
-| `iwac:gemma431bIt*` | — | — | — | not installed yet |
+| `iwac:gemma431bIt*` | in progress | in progress | in progress | installed 2026-08-14; first run under way |
 
 **"Complete" is per property, not per model.** The writer omits any field the
 model left empty, so all three active members are complete on centralité and
@@ -252,10 +258,10 @@ asserting "those are empty" is the step that gets skipped on the day it is
 wrong. Retiring a never-used property is legitimate and the pre-flight will pass
 it.
 
-#### Pending: the 2026-08-07 trim and the Gemma swap (not yet uploaded)
+#### Uploaded 2026-08-14: additions applied, deletions did not
 
-This file currently stages the largest such change so far. As of **2026-08-14**
-the pre-flight reports:
+This file staged the largest such change so far. Before the upload the
+pre-flight reported:
 
 ```
 Installed in Omeka       74
@@ -265,22 +271,28 @@ Would be DELETED         48
 ✓ Safe to upload — 6 additions, 48 deletions — all verified empty.
 ```
 
-The 6 additions are Gemma's. The 48 deletions break down as **18** generation-1
-(`iwac:gemini*`, `iwac:chatgpt*`, `iwac:mistral*`), **6** DeepSeek April preview
-(`iwac:deepseekV4Flash*`), and **24** never-written (`iwac:gemini36Flash*`,
-`iwac:qwen35A3b*`, `iwac:qwen35A10b*`, `iwac:gemini35FlashLite*`). An independent
-per-property count over the item API agrees: all 48 are at 0 items.
+**What actually happened: the six additions landed and the 48 deletions did
+not.** The live vocabulary went 74 → 80, Gemma's six properties were created
+(ids 386–391) and the pipeline could annotate with them the same day; every
+property the file omits is still installed. So on this instance the update flow
+behaves as add-only in practice, whatever its diff preview lists. The pre-flight
+still earns its place — it is what proves a deletion *would* be safe — but treat
+the deletion half as advisory rather than as something the upload will carry out.
 
-Emptying the values and removing the declarations are **two separate steps**.
-The first was done on 2026-08-07 through the item API; the second is this
-vocabulary update, and it is still outstanding. Until someone runs it, Omeka
-keeps listing 48 properties that can never hold anything and none of the six
-Gemma needs — the first is harmless, but the second means `01_sentiment_analysis`
-cannot annotate with Gemma at all: `resolve_property_ids` fails loudly on the
-missing terms rather than writing a partial set. Either way, a property list read
-from the live API is not the vocabulary this file describes. Re-run `--verify`
-immediately before uploading; a green result from last week is not a green result
-today.
+The 48 break down as **18** generation-1 (`iwac:gemini*`, `iwac:chatgpt*`,
+`iwac:mistral*`), **6** DeepSeek April preview (`iwac:deepseekV4Flash*`), and
+**24** never-written (`iwac:gemini36Flash*`, `iwac:qwen35A3b*`,
+`iwac:qwen35A10b*`, `iwac:gemini35FlashLite*`). An independent per-property count
+over the item API agrees: all 48 are at 0 items, so nothing is lost by their
+lingering.
+
+Emptying the values and removing the declarations are **two separate steps**, and
+only the first has ever completed here: it was done on 2026-08-07 through the item
+API. Removing the declarations remains outstanding and is not urgent — Omeka
+simply keeps listing 48 properties that can never hold anything, and
+`resolve_property_ids` asks for the 25 the panel needs rather than reading the
+list. Re-run `--verify` immediately before any future upload; a green result from
+last week is not a green result today.
 
 > **The pre-flight is blind to value annotations.** It counts with Omeka's
 > `property[type]=ex` item filter, which does not see annotation values — the
