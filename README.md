@@ -17,18 +17,20 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.2 (`owl:versionInfo`), modified 2026-08-07 |
+| **Version** | 1.3 (`owl:versionInfo`), modified 2026-08-14 |
 | **Properties in this file** | **32** — 8 provenance + 24 sentiment |
 | **Properties installed on `islam.zmo.de`** | **74** (vocabulary 10) |
 
 > **The file and the live archive have not converged yet.** `iwac-vocabulary.ttl`
-> was trimmed to 32 properties on 2026-08-07; the corresponding *vocabulary
-> update* has **not** been performed, so Omeka still declares all 74. The 42
-> surplus declarations are empty shells — their values were deleted separately,
-> through the item API, and every one is verified at 0 items. See
+> was trimmed to 32 properties on 2026-08-07 and its Google slot re-pointed to
+> Gemma 4 31B on 2026-08-14; neither *vocabulary update* has been performed, so
+> Omeka still declares all 74 and none of Gemma's six. The 48 surplus
+> declarations are empty shells — the generation-1 values were deleted
+> separately through the item API, the rest were never written, and every one is
+> verified at 0 items. See
 > [Updating an already-imported vocabulary](#updating-an-already-imported-vocabulary).
 >
-> Counts below verified against the live API on **2026-08-11**.
+> Counts below verified against the live API on **2026-08-14**.
 
 ## Properties
 
@@ -86,9 +88,9 @@ current pipeline does not write it.
 | `iwac:gpt56Luna*` | `gpt-5.6-luna` | 79610 | `gpt_5_6_luna_` |
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
-| `iwac:gemini35FlashLite*` | `gemini-3.5-flash-lite` | 79617 | — (unrun; no column) |
+| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (declared here, not yet installed) |
 
-##### Population (live, 2026-08-11)
+##### Population (live, 2026-08-14)
 
 The annotated universe is **12,305** of the 12,356 `bibo:Article` items — the
 Français and Anglais ones. The other 51 (Ewé, Kabiyè, Dendi, no language) are
@@ -100,7 +102,7 @@ confident but unusable output for them rather than failing visibly.
 | `iwac:gpt56Luna*` | 12,305 | 12,305 | **12,015** | 12,305 / 12,305 / 12,305 |
 | `iwac:mistralSmall2603*` | 12,305 | 12,305 | **12,051** | 12,305 / 12,305 / 12,305 |
 | `iwac:deepseekV4Flash0731*` | 12,305 | 12,305 | **11,816** | 12,305 / 12,305 / 12,304 |
-| `iwac:gemini35FlashLite*` | 0 | 0 | 0 | 0 / 0 / 0 |
+| `iwac:gemma431bIt*` | — | — | — | not installed yet |
 
 **"Complete" is per property, not per model.** The writer omits any field the
 model left empty, so all three active members are complete on centralité and
@@ -114,24 +116,40 @@ to score objectivity on an article it judged `Non abordé` is not disagreeing
 about objectivity — it is saying the article is not about Islam. Condition on
 centralité before aligning models, never on the subjectivité nulls.
 
-`iwac:gemini35FlashLite*` is declared and holds zero: it is the one panel member
-never run. It is also absent from the Hugging Face panel definition, so no
-`gemini_3_5_flash_lite_*` column exists on either dataset repo — do not write
-code expecting one.
+**The Google slot has never held a value, and on 2026-08-14 it changed occupant
+rather than contents.** It was `iwac:gemini35FlashLite*` from 2026-07-31,
+declared on Omeka and verified at 0 items on the day of the swap; this file now
+declares `iwac:gemma431bIt*` instead, so the pending vocabulary update adds
+Gemma's six and drops Flash-Lite's six. Because Flash-Lite never ran, nothing is
+mixed and generation 2 is unchanged by the substitution. Neither prefix has a
+Hugging Face column on either dataset repo — do not write code expecting a
+`gemini_3_5_flash_lite_*` one, and `gemma_4_31b_it_*` will not exist until a run
+produces values and the uploader's panel is extended to carry them.
 
 Every member is its vendor's **high-volume tier**, which is what makes the panel
-a panel rather than a quality ladder. **Two of the four are open weights** and
-can be re-run locally — Mistral Small 4 under Apache-2.0, DeepSeek V4 Flash under
-MIT — at 6.5B and 13B active parameters. For an archive that is the difference
-between an annotation you can cite and one that can only be taken on trust.
+a panel rather than a quality ladder — and it is why the Google slot moved: at
+$0.30/$2.50 per 1M, Flash-Lite was the panel's remaining cost outlier at roughly
+four times a DeepSeek pass, where Gemma sits at $0.09/$0.34. **Three of the four
+are now open weights** and can be re-run locally — Gemma 4 31B and Mistral
+Small 4 under Apache-2.0, DeepSeek V4 Flash under MIT — though at 31B (dense),
+6.5B and 13B active parameters the spread is a factor of five where the previous
+pair sat inside a factor of two, so an agreement figure among them does slightly
+more to measure model size than it used to. For an archive the trade is still
+worth it: it is the difference between an annotation you can cite and one that
+can only be taken on trust.
+
+Gemma is routed through **OpenRouter**, never `GEMINI_API_KEY`: it is
+free-of-charge on the Gemini API with no paid tier, and Google's pricing page
+states that free-tier content is used to improve its products — unacceptable when
+the request body is a whole archival article.
 
 `Centralite`, `Polarite` and `SubjectiviteScore` are `owl:ObjectProperty` here,
 which is what the pipeline actually writes — links into the controlled
 vocabulary, not strings. The generation-1 declarations called two of the three
 `owl:DatatypeProperty`, which never matched.
 
-**Three** slots were declared and never written, and this file drops all
-eighteen of their properties: `iwac:qwen35A3b*` (3B active, a quarter of the
+**Four** slots were declared and never written, and this file drops all
+twenty-four of their properties: `iwac:qwen35A3b*` (3B active, a quarter of the
 other open-weights members) and `iwac:gemini36Flash*` (at $1.50/$7.50 per 1M,
 five to seventeen times the rest — an inter-model disagreement involving it
 could always be read as "the expensive model knows better" rather than as two
@@ -139,7 +157,14 @@ readings of the construct), both re-pointed on 2026-07-31; then
 `iwac:qwen35A10b*`, dropped 2026-08-05 on serving grounds — OpenRouter listed
 five endpoints for it against DeepSeek's 22, one without structured-output
 support, putting its median call at 104 s where the rest of the panel sat at
-4–6 s.
+4–6 s; and now `iwac:gemini35FlashLite*`, replaced by Gemma on 2026-08-14.
+
+Gemma was checked against that Qwen precedent before being declared, because it
+is the same shape of risk: OpenRouter lists **19** endpoints for
+`google/gemma-4-31b-it`, **16** of which support structured outputs, so
+`require_parameters` leaves a deep pool rather than Qwen's four. Its median call
+is nevertheless ~72 s — slower than DeepSeek — so the corpus pass is a matter of
+days, not hours.
 
 #### Generation 1 (January–February 2026) — archived on Hugging Face
 
@@ -227,32 +252,35 @@ asserting "those are empty" is the step that gets skipped on the day it is
 wrong. Retiring a never-used property is legitimate and the pre-flight will pass
 it.
 
-#### Pending: the 2026-08-07 trim (not yet uploaded)
+#### Pending: the 2026-08-07 trim and the Gemma swap (not yet uploaded)
 
-This file currently stages the largest such change so far. As of **2026-08-11**
+This file currently stages the largest such change so far. As of **2026-08-14**
 the pre-flight reports:
 
 ```
 Installed in Omeka       74
 Declared in the .ttl     32
-Would be added            0
-Would be DELETED         42
-✓ Safe to upload — 0 additions, 42 deletions — all verified empty.
+Would be added            6
+Would be DELETED         48
+✓ Safe to upload — 6 additions, 48 deletions — all verified empty.
 ```
 
-The 42 break down as **18** generation-1 (`iwac:gemini*`, `iwac:chatgpt*`,
-`iwac:mistral*`), **6** DeepSeek April preview (`iwac:deepseekV4Flash*`), and
-**18** never-written (`iwac:gemini36Flash*`, `iwac:qwen35A3b*`,
-`iwac:qwen35A10b*`). An independent per-property count over the item API agrees:
-all 42 are at 0 items.
+The 6 additions are Gemma's. The 48 deletions break down as **18** generation-1
+(`iwac:gemini*`, `iwac:chatgpt*`, `iwac:mistral*`), **6** DeepSeek April preview
+(`iwac:deepseekV4Flash*`), and **24** never-written (`iwac:gemini36Flash*`,
+`iwac:qwen35A3b*`, `iwac:qwen35A10b*`, `iwac:gemini35FlashLite*`). An independent
+per-property count over the item API agrees: all 48 are at 0 items.
 
 Emptying the values and removing the declarations are **two separate steps**.
 The first was done on 2026-08-07 through the item API; the second is this
 vocabulary update, and it is still outstanding. Until someone runs it, Omeka
-keeps listing 42 properties that can never hold anything — harmless, but it
-means a property list read from the live API is not the vocabulary this file
-describes. Re-run `--verify` immediately before uploading; a green result from
-last week is not a green result today.
+keeps listing 48 properties that can never hold anything and none of the six
+Gemma needs — the first is harmless, but the second means `01_sentiment_analysis`
+cannot annotate with Gemma at all: `resolve_property_ids` fails loudly on the
+missing terms rather than writing a partial set. Either way, a property list read
+from the live API is not the vocabulary this file describes. Re-run `--verify`
+immediately before uploading; a green result from last week is not a green result
+today.
 
 > **The pre-flight is blind to value annotations.** It counts with Omeka's
 > `property[type]=ex` item filter, which does not see annotation values — the
@@ -279,7 +307,7 @@ property name, which is the only layer an Omeka query can reach, and the value
 is a link into the controlled vocabulary:
 
 ```json
-"iwac:gemini35FlashLitePolarite": [{
+"iwac:gemma431bItPolarite": [{
   "type": "resource:item",
   "value_resource_id": 78039
 }]
