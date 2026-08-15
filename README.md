@@ -94,7 +94,7 @@ current pipeline does not write it.
 | `iwac:gpt56Luna*` | `gpt-5.6-luna` | 79610 | `gpt_5_6_luna_` |
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
-| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (annotated, but not yet exported) |
+| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (complete on Omeka, not yet exported) |
 
 ##### Population (live, 2026-08-14)
 
@@ -108,15 +108,22 @@ confident but unusable output for them rather than failing visibly.
 | `iwac:gpt56Luna*` | 12,305 | 12,305 | **12,015** | 12,305 / 12,305 / 12,305 |
 | `iwac:mistralSmall2603*` | 12,305 | 12,305 | **12,051** | 12,305 / 12,305 / 12,305 |
 | `iwac:deepseekV4Flash0731*` | 12,305 | 12,305 | **11,816** | 12,305 / 12,305 / 12,304 |
-| `iwac:gemma431bIt*` | 12,240 → filling | 12,240 → filling | 11,994 → filling | first pass 2026-08-14/15; retry under way |
+| `iwac:gemma431bIt*` | 12,298 | 12,298 | **12,055** | 12,298 / 12,298 / 12,298 |
 
-**Gemma's shortfall is a different animal from the other three.** Its first pass
-(18.8 h, 2026-08-14/15) annotated **12,240** of the 12,298 eligible articles and
-ended with **58 transient connection failures**, spread across all six properties
-rather than concentrated on subjectivité. A retry pass — the same command, which
-re-requests nothing already cached — was running when this was written, so the
-counts above were climbing through 12,26x. Read them live; they should converge
-on the same 12,3xx ceiling as the rest.
+**Gemma reached parity in two passes, and the shortfall in between was a
+different animal from the other three's.** Its first pass (18.8 h, 2026-08-14/15)
+annotated 12,240 and ended with **58 transient connection failures** spread
+across all six properties rather than concentrated on subjectivité. Re-running
+the identical command recovered all of them — 61 items, 0 failures, nothing
+already cached re-requested — so the member is now complete. A gap in one member
+alone is a failed run and is fixed this way; a gap in all four at once is the
+corpus moving.
+
+> **The ceiling moved: 12,305 → 12,298**, because `bibo:Article` went 12,356 →
+> 12,349 between the 2026-08-07 and 2026-08-15 readings. The first three rows
+> above were measured at the old ceiling and now read 12,298 live, exactly like
+> Gemma. Nothing was lost from them — seven articles left the class and took
+> their annotations with them.
 
 **"Complete" is per property, not per model.** The writer omits any field the
 model left empty, so the members are complete on centralité and polarité and
@@ -124,8 +131,8 @@ short on subjectivité — by different amounts, and for different reasons. Neve
 infer a missing score from a present justification: DeepSeek has 12,304
 subjectivité justifications against 11,816 scores, so ~488 articles carry the
 reasoning with no score attached. Gemma behaves the same way, and more often in
-proportion: 12,019 scores against 12,264 justifications at the last reading, so
-~245 articles carry the prose without the label.
+proportion: 12,055 scores against 12,298 justifications, so **243** articles
+carry the prose without the label.
 
 Those shortfalls are **not** comparable to each other. A model that declines to
 score objectivity on an article it judged `Non abordé` is not disagreeing about
