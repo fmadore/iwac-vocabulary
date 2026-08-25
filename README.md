@@ -19,14 +19,15 @@ This vocabulary provides properties for:
 | **Languages** | English, French |
 | **Version** | 1.4 (`owl:versionInfo`), modified 2026-08-25 |
 | **Properties in this file** | **38** — 8 provenance + 30 sentiment |
-| **Properties installed on `islam.zmo.de`** | **80** (vocabulary 10), rising to 86 when v1.4 is uploaded |
+| **Properties installed on `islam.zmo.de`** | **86** (vocabulary 10) — v1.4 uploaded 2026-08-25 |
 
 > **The file will never converge with the live archive, and that is settled
 > rather than pending: Omeka does not remove a vocabulary property on update.**
 > An update applies additions only. The 2026-08-14 upload was read at the time as
 > Omeka *declining* to apply that round's deletions; it is simply what the
 > operation does. So the live vocabulary is a superset of this file and stays
-> one — 80 installed against 38 declared today, 86 against 38 once v1.4 goes up.
+> one — 86 installed against 38 declared, after the v1.4 upload added Qwen's six
+> and removed none of the 48.
 >
 > Two consequences, and they pull in opposite directions:
 >
@@ -89,8 +90,9 @@ Each annotator model has 6 properties:
 
 **Only generation 2 carries values.** The vendor-keyed generation-1 sets and the
 retired DeepSeek preview were emptied on the live archive on 2026-08-07 and
-dropped from this file; their *declarations* survive on Omeka until the pending
-vocabulary update runs. See [Generation 1](#generation-1-januaryfebruary-2026--archived-on-hugging-face)
+dropped from this file. Their *declarations* survive on Omeka permanently — an
+update never removes a property — so a property list read from the API will
+always show more than this file declares. See [Generation 1](#generation-1-januaryfebruary-2026--archived-on-hugging-face)
 below for where that campaign now lives.
 
 #### Generation 2 (2026-07 onwards) — 30 properties
@@ -108,7 +110,7 @@ current pipeline does not write it.
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
 | `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (complete on Omeka, not yet exported) |
-| `iwac:qwen3827b*` | `Qwen/Qwen3.8-27B` (self-hosted) | 111933 | `qwen3_8_27b_` (pending upload) |
+| `iwac:qwen3827b*` | `Qwen/Qwen3.8-27B` (self-hosted) | 111933 | — (final on Omeka, not yet exported) |
 
 **Qwen3.8 27B joined as a fifth member on 2026-08-25, and it is the first whose
 annotations were produced on hardware in the building** rather than through
@@ -126,40 +128,62 @@ authority item, because the route is half of what a provenance record claims.
 It must never be promoted alongside this one: a panel that counts one reading of
 the construct as two is measuring its own routing.
 
-##### Population (live, 2026-08-14)
+##### Population (live, 2026-08-25)
 
-The annotated universe is **12,305** of the 12,356 `bibo:Article` items — the
-Français and Anglais ones. The other 51 (Ewé, Kabiyè, Dendi, no language) are
-skipped deliberately: the prompt is French, and a French-prompted model returns
-confident but unusable output for them rather than failing visibly.
+The annotated universe is **12,298** of the 12,349 `bibo:Article` items — the
+Français and Anglais ones. The other 51 (Ewé 32, Kabiyè 11, Dendi 2, no language
+6) are skipped deliberately: the prompt is French, and a French-prompted model
+returns confident but unusable output for them rather than failing visibly.
 
 | Property prefix | Centralité | Polarité | Subjectivité | …Justification (C / P / S) |
 |---|---:|---:|---:|---|
-| `iwac:gpt56Luna*` | 12,305 | 12,305 | **12,015** | 12,305 / 12,305 / 12,305 |
-| `iwac:mistralSmall2603*` | 12,305 | 12,305 | **12,051** | 12,305 / 12,305 / 12,305 |
-| `iwac:deepseekV4Flash0731*` | 12,305 | 12,305 | **11,816** | 12,305 / 12,305 / 12,304 |
+| `iwac:gpt56Luna*` | 12,298 | 12,298 | **12,008** | 12,298 / 12,298 / 12,298 |
+| `iwac:mistralSmall2603*` | 12,298 | 12,298 | **12,044** | 12,298 / 12,298 / 12,298 |
+| `iwac:deepseekV4Flash0731*` | 12,298 | 12,298 | **11,809** | 12,298 / 12,298 / 12,297 |
 | `iwac:gemma431bIt*` | 12,298 | 12,298 | **12,055** | 12,298 / 12,298 / 12,298 |
+| `iwac:qwen3827b*` | 12,098 | 12,098 | **11,811** | 12,098 / 12,095 / 12,094 |
+
+**Qwen is 200 short of the ceiling on every property, and that is the intended
+final state.** Written 2026-08-25 from a self-hosted run on Festus, imported
+rather than re-annotated so that the values published are the ones that were
+measured. 12,098 of the 12,251 articles it was given ever produced a valid
+answer; the other 153 were attempted four times each and retired. 145 of them
+fail one cross-field rule — a null `subjectivite_score` beside a non-null
+centralité — and they concentrate on low centrality: 5.45% of `Marginal`
+articles never annotated against 0.00% of `Non abordé`. The model draws the
+"nothing to judge" line one notch further up the scale than the prompt does.
+**Do not re-run this member to close the gap.** The retry rate climbed 10.4% →
+42% → 52% → 55% across four passes, so the survivors are a hard core rather than
+bad luck, and the failure log in the pipelines repo records each one.
+
+Its numbers reconcile exactly, which is worth stating because none of the
+shortfalls are the same kind of thing: 11,811 = 12,098 − 287 nulls (and 287 is
+precisely its `Non abordé` count), 12,095 = 12,098 − 3 blank polarité
+justifications, 12,094 = 12,098 − 4 blank subjectivité justifications.
 
 **Gemma reached parity in two passes, and the shortfall in between was a
 different animal from the other three's.** Its first pass (18.8 h, 2026-08-14/15)
 annotated 12,240 and ended with **58 transient connection failures** spread
 across all six properties rather than concentrated on subjectivité. Re-running
 the identical command recovered all of them — 61 items, 0 failures, nothing
-already cached re-requested — so the member is now complete. A gap in one member
-alone is a failed run and is fixed this way; a gap in all four at once is the
-corpus moving.
+already cached re-requested — so the member is now complete. That is the
+repairable kind of gap and this is how it is fixed; a gap in all five at once is
+the corpus moving; and Qwen's is a third kind that re-running will not touch.
 
 > **The ceiling moved: 12,305 → 12,298**, because `bibo:Article` went 12,356 →
-> 12,349 between the 2026-08-07 and 2026-08-15 readings. The first three rows
-> above were measured at the old ceiling and now read 12,298 live, exactly like
-> Gemma. Nothing was lost from them — seven articles left the class and took
-> their annotations with them.
+> 12,349 between the 2026-08-07 and 2026-08-15 readings. Nothing was lost —
+> seven articles left the class and took their annotations with them. The table
+> above is now measured entirely at the new ceiling; the previous revision's
+> first three rows were not, which is why their subjectivité figures each read
+> exactly 7 higher (12,015 / 12,051 / 11,816). Comparing a row against an older
+> revision means checking which ceiling each was measured at before reading a
+> difference as a loss.
 
 **"Complete" is per property, not per model.** The writer omits any field the
 model left empty, so the members are complete on centralité and polarité and
 short on subjectivité — by different amounts, and for different reasons. Never
-infer a missing score from a present justification: DeepSeek has 12,304
-subjectivité justifications against 11,816 scores, so ~488 articles carry the
+infer a missing score from a present justification: DeepSeek has 12,297
+subjectivité justifications against 11,809 scores, so ~488 articles carry the
 reasoning with no score attached. Gemma behaves the same way, and more often in
 proportion: 12,055 scores against 12,298 justifications, so **243** articles
 carry the prose without the label.
@@ -172,9 +196,10 @@ centralité before aligning models, never on the subjectivité nulls.
 **The Google slot has never held a value, and on 2026-08-14 it changed occupant
 rather than contents.** It was `iwac:gemini35FlashLite*` from 2026-07-31,
 declared on Omeka and verified at 0 items on the day of the swap; this file now
-declares `iwac:gemma431bIt*` instead, so the pending vocabulary update adds
-Gemma's six and drops Flash-Lite's six. Because Flash-Lite never ran, nothing is
-mixed and generation 2 is unchanged by the substitution. Neither prefix has a
+declares `iwac:gemma431bIt*` instead. The 2026-08-14 upload added Gemma's six
+and left Flash-Lite's six installed and empty, where they remain. Because
+Flash-Lite never ran, nothing is mixed and generation 2 is unchanged by the
+substitution. Neither prefix has a
 Hugging Face column on either dataset repo — do not write code expecting a
 `gemini_3_5_flash_lite_*` one, and `gemma_4_31b_it_*` will not exist until a run
 produces values and the uploader's panel is extended to carry them.
