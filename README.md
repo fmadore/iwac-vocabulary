@@ -17,26 +17,39 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.3 (`owl:versionInfo`), modified 2026-08-14 |
-| **Properties in this file** | **32** — 8 provenance + 24 sentiment |
-| **Properties installed on `islam.zmo.de`** | **80** (vocabulary 10) |
+| **Version** | 1.4 (`owl:versionInfo`), modified 2026-08-25 |
+| **Properties in this file** | **38** — 8 provenance + 30 sentiment |
+| **Properties installed on `islam.zmo.de`** | **80** (vocabulary 10), rising to 86 when v1.4 is uploaded |
 
-> **The file and the live archive have still not converged, and the 2026-08-14
-> upload shows why: Omeka applied the additions and not the deletions.** The file
-> was trimmed to 32 properties on 2026-08-07 and its Google slot re-pointed to
-> Gemma 4 31B on 2026-08-14. Uploading it added Gemma's six — 74 → **80** — while
-> all 48 properties the file omits stayed installed. Do not read a green
-> pre-flight as a promise that they will go; plan on removing them separately, or
-> on their staying.
+> **The file will never converge with the live archive, and that is settled
+> rather than pending: Omeka does not remove a vocabulary property on update.**
+> An update applies additions only. The 2026-08-14 upload was read at the time as
+> Omeka *declining* to apply that round's deletions; it is simply what the
+> operation does. So the live vocabulary is a superset of this file and stays
+> one — 80 installed against 38 declared today, 86 against 38 once v1.4 goes up.
 >
-> That is cosmetic, not a data problem. Every one of the 48 is verified at **0
-> items**: the generation-1 values were deleted separately through the item API,
-> and the rest were never written. Nothing reads them, and the pipeline resolves
-> only the 25 terms it needs. The one real consequence is that a property list
-> read from the live API is not the vocabulary this file describes. See
+> Two consequences, and they pull in opposite directions:
+>
+> - **Nothing is at risk from omission.** A member dropped from this file keeps
+>   its installed property and its values. The 48 properties the file omits — the
+>   vendor-keyed generation-1 sets, the retired DeepSeek preview, the dropped
+>   Qwen3.5 and Gemini candidates — are all verified at **0 items** anyway: the
+>   generation-1 values were deleted separately through the item API, and the
+>   rest were never written.
+> - **Removing one is a manual job, not a side effect of uploading.** If the
+>   declared-but-empty properties are ever to go, they go by hand.
+>
+> Run `00_setup_properties.py --verify` before every upload regardless. It is not
+> asking whether Omeka will delete anything — it will not — but whether anything
+> this file omits still holds values, which is the question that matters if the
+> properties are ever pruned by hand and the only one that would catch a member
+> dropped from `PANEL` by mistake.
+>
+> The one live consequence is that a property list read from the API is not the
+> vocabulary this file describes. See
 > [Updating an already-imported vocabulary](#updating-an-already-imported-vocabulary).
 >
-> Counts below verified against the live API on **2026-08-14**.
+> Counts below verified against the live API on **2026-08-25**.
 
 ## Properties
 
@@ -50,7 +63,7 @@ Used as value annotations to document which AI model generated specific metadata
 | `iwac:summaryModel` | AI model used for summarization |
 | `iwac:nerModel` | AI model used for named entity recognition |
 | `iwac:transcriptionModel` | AI model used for audio/video transcription |
-| `iwac:sentimentModel` | AI model that produced a sentiment annotation — **legacy**, see [Generation 2](#generation-2-2026-07-onwards--24-properties) |
+| `iwac:sentimentModel` | AI model that produced a sentiment annotation — **legacy**, see [Generation 2](#generation-2-2026-07-onwards--30-properties) |
 | `iwac:processingDate` | Date when AI processing was performed |
 | `iwac:confidence` | Confidence score (0-1) |
 | `iwac:modelVersion` | Specific version of the AI model |
@@ -61,7 +74,7 @@ but a `GET` on any article shows them — e.g. item 2233 carries
 `iwac:summaryModel` → `GPT-5.6 Luna` on both its French and English
 `bibo:shortDescription`.
 
-### Sentiment Analysis (24 properties)
+### Sentiment Analysis (30 properties)
 
 Each annotator model has 6 properties:
 
@@ -80,7 +93,7 @@ dropped from this file; their *declarations* survive on Omeka until the pending
 vocabulary update runs. See [Generation 1](#generation-1-januaryfebruary-2026--archived-on-hugging-face)
 below for where that campaign now lives.
 
-#### Generation 2 (2026-07 onwards) — 24 properties
+#### Generation 2 (2026-07 onwards) — 30 properties
 
 Keyed by **model**. The property name *is* the provenance, and it has to be:
 Omeka does not index value annotations, so a model recorded only in an
@@ -95,6 +108,23 @@ current pipeline does not write it.
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
 | `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (complete on Omeka, not yet exported) |
+| `iwac:qwen3827b*` | `Qwen/Qwen3.8-27B` (self-hosted) | 111933 | `qwen3_8_27b_` (pending upload) |
+
+**Qwen3.8 27B joined as a fifth member on 2026-08-25, and it is the first whose
+annotations were produced on hardware in the building** rather than through
+anyone's API — served with vLLM on the University of Bayreuth's Festus cluster.
+Two things follow that the other four cannot claim. Its answers cost queue time
+instead of tokens, so re-running the panel over the corpus is not a budget
+decision; and the run is reproducible without a third party consenting to serve
+the weights, which is the strongest form of the archivability argument that also
+covers Mistral Small 4, Gemma 4 and DeepSeek V4 Flash.
+
+Its authority item (111933) and registry key name the **self-hosted route**, not
+just the weights. The same model reached through OpenRouter is a separate
+candidate with its own prefix (`iwac:qwen3827bOr*`) and would need its own
+authority item, because the route is half of what a provenance record claims.
+It must never be promoted alongside this one: a panel that counts one reading of
+the construct as two is measuring its own routing.
 
 ##### Population (live, 2026-08-14)
 
