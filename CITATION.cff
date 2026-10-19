@@ -3,8 +3,8 @@ message: >-
   If you reuse this vocabulary, or cite metadata annotated with it,
   please cite the repository as below.
 title: "IWAC Vocabulary"
-version: "1.2"
-date-released: 2026-08-11
+version: "1.4"
+date-released: 2026-10-19
 abstract: >-
   An RDF vocabulary for recording AI processing provenance and multi-model
   sentiment annotation in a digital archive. It defines value-annotation
