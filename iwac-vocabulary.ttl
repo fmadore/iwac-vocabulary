@@ -15,9 +15,9 @@ iwac: a owl:Ontology ;
     rdfs:comment "Vocabulary for the Islam West Africa Collection, covering AI processing provenance and sentiment analysis metadata"@en ;
     rdfs:comment "Vocabulaire pour la Collection Islam Afrique de l'Ouest, couvrant la provenance du traitement IA et les métadonnées d'analyse de sentiment"@fr ;
     dcterms:created "2026-01-26"^^xsd:date ;
-    dcterms:modified "2026-08-25"^^xsd:date ;
+    dcterms:modified "2026-10-17"^^xsd:date ;
     dcterms:creator "Frédérick Madore" ;
-    owl:versionInfo "1.4" .
+    owl:versionInfo "1.5" .
 
 # ============================================
 # AI PROVENANCE PROPERTIES
@@ -36,6 +36,13 @@ iwac:summaryModel a owl:DatatypeProperty ;
     rdfs:label "Modèle IA - Résumé"@fr ;
     rdfs:comment "AI model used to generate summaries or descriptions"@en ;
     rdfs:comment "Modèle d'IA utilisé pour générer des résumés ou descriptions"@fr ;
+    rdfs:range xsd:string .
+
+iwac:descriptionModel a owl:DatatypeProperty ;
+    rdfs:label "AI Model - Description"@en ;
+    rdfs:label "Modèle IA - Description"@fr ;
+    rdfs:comment "AI model that drafted the description of an authority record (person, organisation, subject, place, event)"@en ;
+    rdfs:comment "Modèle d'IA ayant rédigé la description d'une notice d'autorité (personne, organisation, sujet, lieu, événement)"@fr ;
     rdfs:range xsd:string .
 
 iwac:nerModel a owl:DatatypeProperty ;

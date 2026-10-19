@@ -17,8 +17,8 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.4 (`owl:versionInfo`), modified 2026-08-25 |
-| **Properties in this file** | **38** — 8 provenance + 30 sentiment |
+| **Version** | 1.5 (`owl:versionInfo`), modified 2026-10-17 — not yet uploaded |
+| **Properties in this file** | **39** — 9 provenance + 30 sentiment |
 | **Properties installed on `islam.zmo.de`** | **86** (vocabulary 10) — v1.4 uploaded 2026-08-25 |
 
 > **The file will never converge with the live archive, and that is settled
@@ -54,7 +54,7 @@ This vocabulary provides properties for:
 
 ## Properties
 
-### AI Provenance (8 properties)
+### AI Provenance (9 properties)
 
 Used as value annotations to document which AI model generated specific metadata values.
 
@@ -62,6 +62,7 @@ Used as value annotations to document which AI model generated specific metadata
 |----------|-------------|
 | `iwac:ocrModel` | AI model used for text extraction |
 | `iwac:summaryModel` | AI model used for summarization |
+| `iwac:descriptionModel` | AI model that drafted an authority record's `dcterms:description` (v1.5; written by `iwac-ai-pipelines/AI_authority_curation`) |
 | `iwac:nerModel` | AI model used for named entity recognition |
 | `iwac:transcriptionModel` | AI model used for audio/video transcription |
 | `iwac:sentimentModel` | AI model that produced a sentiment annotation — **legacy**, see [Generation 2](#generation-2-2026-07-onwards--30-properties) |
@@ -388,10 +389,10 @@ last week is not a green result today.
 > **The pre-flight is blind to value annotations.** It counts with Omeka's
 > `property[type]=ex` item filter, which does not see annotation values — the
 > same indexing gap that pushed generation-2 provenance into property names. So
-> the eight AI-provenance properties above will report "empty" whatever they
+> the nine AI-provenance properties above will report "empty" whatever they
 > actually hold, and `iwac:ocrModel` and `iwac:summaryModel` are written on
 > every OCR and summary run. Never let a green pre-flight authorise deleting an
-> annotation property; those eight are cheap to keep and must stay in the file.
+> annotation property; those nine are cheap to keep and must stay in the file.
 
 ### Value Annotations Example
 
