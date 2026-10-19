@@ -6,7 +6,7 @@ RDF vocabulary for the [Islam West Africa Collection (IWAC)](https://islam.zmo.d
 
 This vocabulary provides properties for:
 
-- **AI Processing Provenance**: Track which AI models generated specific metadata (OCR, summaries, named entity recognition)
+- **AI Processing Provenance**: Track which AI models generated specific metadata (OCR, summaries, named entity recognition, authority descriptions)
 - **Sentiment Analysis**: Store multi-model sentiment analysis results, one property set per annotator model
 
 ## Vocabulary Details
@@ -17,7 +17,7 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.5 (`owl:versionInfo`), modified 2026-10-17 — not yet uploaded |
+| **Version** | 1.5 (`owl:versionInfo`), modified 2026-10-17 — tagged [v1.5](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.5), not yet uploaded |
 | **Properties in this file** | **39** — 9 provenance + 30 sentiment |
 | **Properties installed on `islam.zmo.de`** | **86** (vocabulary 10) — v1.4 uploaded 2026-08-25 |
 
@@ -26,8 +26,9 @@ This vocabulary provides properties for:
 > An update applies additions only. The 2026-08-14 upload was read at the time as
 > Omeka *declining* to apply that round's deletions; it is simply what the
 > operation does. So the live vocabulary is a superset of this file and stays
-> one — 86 installed against 38 declared, after the v1.4 upload added Qwen's six
-> and removed none of the 48.
+> one — 86 installed against 39 declared. The v1.4 upload added Qwen's six and
+> removed none of the 48; the v1.5 upload will add `iwac:descriptionModel` and
+> likewise remove nothing.
 >
 > Two consequences, and they pull in opposite directions:
 >
@@ -208,11 +209,12 @@ produces values and the uploader's panel is extended to carry them.
 Every member is its vendor's **high-volume tier**, which is what makes the panel
 a panel rather than a quality ladder — and it is why the Google slot moved: at
 $0.30/$2.50 per 1M, Flash-Lite was the panel's remaining cost outlier at roughly
-four times a DeepSeek pass, where Gemma sits at $0.09/$0.34. **Three of the four
+four times a DeepSeek pass, where Gemma sits at $0.09/$0.34. **Four of the five
 are now open weights** and can be re-run locally — Gemma 4 31B and Mistral
-Small 4 under Apache-2.0, DeepSeek V4 Flash under MIT — though at 31B (dense),
-6.5B and 13B active parameters the spread is a factor of five where the previous
-pair sat inside a factor of two, so an agreement figure among them does slightly
+Small 4 under Apache-2.0, DeepSeek V4 Flash under MIT, and Qwen3.8 27B, which already
+runs on Festus — though at 31B and 27B (dense), 6.5B and 13B active
+parameters the spread is a factor of five where the previous pair sat inside a
+factor of two, so an agreement figure among them does slightly
 more to measure model size than it used to. For an archive the trade is still
 worth it: it is the difference between an annotation you can cite and one that
 can only be taken on trust.
@@ -335,20 +337,22 @@ with "A vocabulary must be set" — the hydration exists only on `develop`.
 **removes every property absent from the request**, without the admin UI's diff
 preview. Avoid it.)
 
-Adding a property is safe. **Removing one deletes every value stored under it
-across the archive** — and Omeka treats "absent from the uploaded file" as
-removal. Always pre-flight:
+Adding a property is safe, and updating never removes one: a property absent
+from the uploaded file stays installed with its values (see the note at the
+top). Removing a property is a separate, manual step, and **that does delete
+every value stored under it across the archive**. Always pre-flight:
 
 ```bash
 python AI_sentiment_analysis/00_setup_properties.py --verify
 ```
 
-That compares the `.ttl` against the live vocabulary and, for anything the file
-would delete, **counts the values that would be destroyed** — refusing if any is
-non-empty. It checks rather than offering an override flag, because an operator
-asserting "those are empty" is the step that gets skipped on the day it is
-wrong. Retiring a never-used property is legitimate and the pre-flight will pass
-it.
+That compares the `.ttl` against the live vocabulary and, for every installed
+property the file omits, **counts the values stored under it**, refusing if any
+is non-empty. An upload will not delete those properties, but the count shows
+whether pruning one by hand would be safe, and it catches a panel member dropped
+from `PANEL` by mistake. It checks rather than offering an override flag, because
+an operator asserting "those are empty" is the step that gets skipped on the day
+it is wrong.
 
 #### Uploaded 2026-08-14: additions applied, deletions did not
 
@@ -368,8 +372,9 @@ not.** The live vocabulary went 74 → 80, Gemma's six properties were created
 (ids 386–391) and the pipeline could annotate with them the same day; every
 property the file omits is still installed. So on this instance the update flow
 behaves as add-only in practice, whatever its diff preview lists. The pre-flight
-still earns its place — it is what proves a deletion *would* be safe — but treat
-the deletion half as advisory rather than as something the upload will carry out.
+still earns its place, because it is what proves a deletion *would* be safe. But
+its "would be DELETED" line lists properties an upload will leave in place, not
+ones it will remove: an update is add-only (see the note at the top).
 
 The 48 break down as **18** generation-1 (`iwac:gemini*`, `iwac:chatgpt*`,
 `iwac:mistral*`), **6** DeepSeek April preview (`iwac:deepseekV4Flash*`), and
@@ -382,8 +387,8 @@ Emptying the values and removing the declarations are **two separate steps**, an
 only the first has ever completed here: it was done on 2026-08-07 through the item
 API. Removing the declarations remains outstanding and is not urgent — Omeka
 simply keeps listing 48 properties that can never hold anything, and
-`resolve_property_ids` asks for the 25 the panel needs rather than reading the
-list. Re-run `--verify` immediately before any future upload; a green result from
+`resolve_property_ids` asks only for the terms the panel needs rather than
+reading the list. Re-run `--verify` immediately before any future upload; a green result from
 last week is not a green result today.
 
 > **The pre-flight is blind to value annotations.** It counts with Omeka's
