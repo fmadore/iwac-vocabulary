@@ -13,7 +13,7 @@ This vocabulary provides properties for:
 
 | Field | Value |
 |-------|-------|
-| **Namespace URI** | `https://islam.zmo.de/ontology/iwac#` (non-dereferenceable; the file is the canonical copy) |
+| **Namespace URI** | `https://islam.zmo.de/ontology/iwac#` (dereferenceable since 2026-10-19 — see [Resolving the namespace](#resolving-the-namespace); this file stays the canonical copy) |
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
@@ -294,12 +294,31 @@ is a different run rather than a newer copy of the same one.
    - **Namespace prefix**: `iwac`
 4. Click **Import**
 
-The namespace URI is an identifier, not a download link — it does not resolve
-(`404`). Fetch the vocabulary from this repository instead:
+The vocabulary can be fetched from this repository or from the namespace
+itself (see [Resolving the namespace](#resolving-the-namespace)):
 
 ```bash
 curl -fsSO https://raw.githubusercontent.com/fmadore/iwac-vocabulary/main/iwac-vocabulary.ttl
 ```
+
+### Resolving the namespace
+
+Since 2026-10-19 `https://islam.zmo.de/ontology/iwac` resolves, so every
+`iwac:` term in the archive's public API (Omeka's `/api-context` maps the prefix
+to this namespace) can be looked up. It is a hash namespace, so the one document
+describes every term:
+
+- An RDF client (`Accept` naming Turtle, RDF/XML, JSON-LD or another RDF syntax,
+  or `*/*`) gets this file as `text/turtle`, with CORS open.
+- A browser asking only for HTML is redirected (`303`) to this README.
+- `https://islam.zmo.de/ontology/iwac.ttl` always returns the file.
+
+The server holds a copy pinned to a commit of this repository, so a change here
+is not live until it is re-pinned there (`update-vocabulary.sh` in
+[IWAC-docker](https://github.com/fmadore/IWAC-docker)). That is deliberate: what
+the namespace serves only changes when someone decides it should. The resolved
+file is never what Omeka has installed, which stays a superset (see the note at
+the top).
 
 ### Updating an already-imported vocabulary
 
