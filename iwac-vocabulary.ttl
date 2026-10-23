@@ -15,9 +15,9 @@ iwac: a owl:Ontology ;
     rdfs:comment "Vocabulary for the Islam West Africa Collection, covering AI processing provenance and sentiment analysis metadata"@en ;
     rdfs:comment "Vocabulaire pour la Collection Islam Afrique de l'Ouest, couvrant la provenance du traitement IA et les métadonnées d'analyse de sentiment"@fr ;
     dcterms:created "2026-01-26"^^xsd:date ;
-    dcterms:modified "2026-10-17"^^xsd:date ;
+    dcterms:modified "2026-10-23"^^xsd:date ;
     dcterms:creator "Frédérick Madore" ;
-    owl:versionInfo "1.5" .
+    owl:versionInfo "1.6" .
 
 # ============================================
 # AI PROVENANCE PROPERTIES
@@ -309,3 +309,46 @@ iwac:qwen3827bSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour le score de subjectivité"@fr ;
     rdfs:range xsd:string .
+
+
+# --- Claude Haiku 5.5 (claude-haiku-5-5) -> HF prefix claude_haiku_5_5_ ---
+
+iwac:claudeHaiku55Centralite a owl:ObjectProperty ;
+    rdfs:label "Claude Haiku 5.5 - Centrality"@en ;
+    rdfs:label "Claude Haiku 5.5 - Centralité"@fr ;
+    rdfs:comment "Level of centrality of Islam/Muslims according to Claude Haiku 5.5 (claude-haiku-5-5)"@en ;
+    rdfs:comment "Niveau de centralité de l'islam/musulmans selon Claude Haiku 5.5 (claude-haiku-5-5)"@fr .
+
+iwac:claudeHaiku55CentraliteJustification a owl:DatatypeProperty ;
+    rdfs:label "Claude Haiku 5.5 - Centrality Justification"@en ;
+    rdfs:label "Claude Haiku 5.5 - Justification centralité"@fr ;
+    rdfs:comment "Claude Haiku 5.5's explanation for the assigned centrality level"@en ;
+    rdfs:comment "Explication de Claude Haiku 5.5 pour le niveau de centralité attribué"@fr ;
+    rdfs:range xsd:string .
+
+iwac:claudeHaiku55Polarite a owl:ObjectProperty ;
+    rdfs:label "Claude Haiku 5.5 - Polarity"@en ;
+    rdfs:label "Claude Haiku 5.5 - Polarité"@fr ;
+    rdfs:comment "Sentiment toward Islam/Muslims according to Claude Haiku 5.5 (claude-haiku-5-5)"@en ;
+    rdfs:comment "Sentiment envers l'islam/musulmans selon Claude Haiku 5.5 (claude-haiku-5-5)"@fr .
+
+iwac:claudeHaiku55PolariteJustification a owl:DatatypeProperty ;
+    rdfs:label "Claude Haiku 5.5 - Polarity Justification"@en ;
+    rdfs:label "Claude Haiku 5.5 - Justification polarité"@fr ;
+    rdfs:comment "Claude Haiku 5.5's explanation for the assigned polarity"@en ;
+    rdfs:comment "Explication de Claude Haiku 5.5 pour la polarité attribuée"@fr ;
+    rdfs:range xsd:string .
+
+iwac:claudeHaiku55SubjectiviteScore a owl:ObjectProperty ;
+    rdfs:label "Claude Haiku 5.5 - Subjectivity Score"@en ;
+    rdfs:label "Claude Haiku 5.5 - Score subjectivité"@fr ;
+    rdfs:comment "Labelled subjectivity level according to Claude Haiku 5.5 (claude-haiku-5-5), linked to controlled vocabulary item"@en ;
+    rdfs:comment "Niveau de subjectivité libellé selon Claude Haiku 5.5 (claude-haiku-5-5), lié à un élément de vocabulaire contrôlé"@fr .
+
+iwac:claudeHaiku55SubjectiviteJustification a owl:DatatypeProperty ;
+    rdfs:label "Claude Haiku 5.5 - Subjectivity Justification"@en ;
+    rdfs:label "Claude Haiku 5.5 - Justification subjectivité"@fr ;
+    rdfs:comment "Claude Haiku 5.5's explanation for the subjectivity score"@en ;
+    rdfs:comment "Explication de Claude Haiku 5.5 pour le score de subjectivité"@fr ;
+    rdfs:range xsd:string .
+

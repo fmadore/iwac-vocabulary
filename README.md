@@ -17,18 +17,18 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.5 (`owl:versionInfo`), modified 2026-10-17 — tagged [v1.5](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.5), not yet uploaded |
-| **Properties in this file** | **39** — 9 provenance + 30 sentiment |
-| **Properties installed on `islam.zmo.de`** | **86** (vocabulary 10) — v1.4 uploaded 2026-08-25 |
+| **Version** | 1.6 (`owl:versionInfo`), modified 2026-10-23 — not yet tagged or uploaded; [v1.5](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.5) is the last tag |
+| **Properties in this file** | **45** — 9 provenance + 36 sentiment |
+| **Properties installed on `islam.zmo.de`** | **87** (vocabulary 10) — v1.5 installed, read 2026-10-23 |
 
 > **The file will never converge with the live archive, and that is settled
 > rather than pending: Omeka does not remove a vocabulary property on update.**
 > An update applies additions only. The 2026-08-14 upload was read at the time as
 > Omeka *declining* to apply that round's deletions; it is simply what the
 > operation does. So the live vocabulary is a superset of this file and stays
-> one — 86 installed against 39 declared. The v1.4 upload added Qwen's six and
-> removed none of the 48; the v1.5 upload will add `iwac:descriptionModel` and
-> likewise remove nothing.
+> one — 87 installed against 45 declared. The v1.4 upload added Qwen's six and
+> v1.5 added `iwac:descriptionModel`, each removing none of the 48; the v1.6
+> upload will add Claude Haiku 5.5's six and likewise remove nothing.
 >
 > Two consequences, and they pull in opposite directions:
 >
@@ -77,7 +77,7 @@ but a `GET` on any article shows them — e.g. item 2233 carries
 `iwac:summaryModel` → `GPT-5.6 Luna` on both its French and English
 `bibo:shortDescription`.
 
-### Sentiment Analysis (30 properties)
+### Sentiment Analysis (36 properties)
 
 Each annotator model has 6 properties:
 
@@ -97,7 +97,7 @@ update never removes a property — so a property list read from the API will
 always show more than this file declares. See [Generation 1](#generation-1-januaryfebruary-2026--archived-on-hugging-face)
 below for where that campaign now lives.
 
-#### Generation 2 (2026-07 onwards) — 30 properties
+#### Generation 2 (2026-07 onwards) — 36 properties
 
 Keyed by **model**. The property name *is* the provenance, and it has to be:
 Omeka does not index value annotations, so a model recorded only in an
@@ -113,6 +113,7 @@ current pipeline does not write it.
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
 | `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (complete on Omeka, not yet exported) |
 | `iwac:qwen3827b*` | `Qwen/Qwen3.8-27B` (self-hosted) | 111933 | — (final on Omeka, not yet exported) |
+| `iwac:claudeHaiku55*` | `claude-haiku-5-5` | 125443 | — (declared in v1.6, not yet annotated) |
 
 **Qwen3.8 27B joined as a fifth member on 2026-08-25, and it is the first whose
 annotations were produced on hardware in the building** rather than through
@@ -129,6 +130,10 @@ candidate with its own prefix (`iwac:qwen3827bOr*`) and would need its own
 authority item, because the route is half of what a provenance record claims.
 It must never be promoted alongside this one: a panel that counts one reading of
 the construct as two is measuring its own routing.
+
+**Claude Haiku 5.5 joined as a sixth member on 2026-10-22**, promoted without a
+pilot at the curator's decision. Its six properties are declared in v1.6 and
+carry no values until its corpus pass runs.
 
 ##### Population (live, 2026-08-25)
 
