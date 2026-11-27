@@ -407,11 +407,16 @@ last week is not a green result today.
 ### Value Annotations Example
 
 ```json
-"bibo:content": [{
-  "@value": "Le président de la République...",
+"bibo:shortDescription": [{
+  "@value": "Cet article rend compte d'une journée de formation...",
+  "@language": "fr",
   "@annotation": {
-    "iwac:ocrModel": [{"@value": "Gemini 2.5 Pro"}],
-    "iwac:processingDate": [{"@value": "2026-01-15"}]
+    "iwac:summaryModel": [{
+      "type": "resource:item",
+      "value_resource_id": 79610,
+      "@id": "https://islam.zmo.de/api/items/79610",
+      "display_title": "GPT-5.6 Luna"
+    }]
   }
 }]
 ```

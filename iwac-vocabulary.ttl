@@ -24,40 +24,35 @@ iwac: a owl:Ontology ;
 # (Used as value annotations)
 # ============================================
 
-iwac:ocrModel a owl:DatatypeProperty ;
+iwac:ocrModel a owl:ObjectProperty ;
     rdfs:label "AI Model - OCR"@en ;
     rdfs:label "Modèle IA - OCR"@fr ;
     rdfs:comment "AI model used for optical character recognition and text extraction"@en ;
-    rdfs:comment "Modèle d'IA utilisé pour la reconnaissance optique de caractères et l'extraction de texte"@fr ;
-    rdfs:range xsd:string .
+    rdfs:comment "Modèle d'IA utilisé pour la reconnaissance optique de caractères et l'extraction de texte"@fr .
 
-iwac:summaryModel a owl:DatatypeProperty ;
+iwac:summaryModel a owl:ObjectProperty ;
     rdfs:label "AI Model - Summary"@en ;
     rdfs:label "Modèle IA - Résumé"@fr ;
     rdfs:comment "AI model used to generate summaries or descriptions"@en ;
-    rdfs:comment "Modèle d'IA utilisé pour générer des résumés ou descriptions"@fr ;
-    rdfs:range xsd:string .
+    rdfs:comment "Modèle d'IA utilisé pour générer des résumés ou descriptions"@fr .
 
-iwac:descriptionModel a owl:DatatypeProperty ;
+iwac:descriptionModel a owl:ObjectProperty ;
     rdfs:label "AI Model - Description"@en ;
     rdfs:label "Modèle IA - Description"@fr ;
     rdfs:comment "AI model that drafted the description of an authority record (person, organisation, subject, place, event)"@en ;
-    rdfs:comment "Modèle d'IA ayant rédigé la description d'une notice d'autorité (personne, organisation, sujet, lieu, événement)"@fr ;
-    rdfs:range xsd:string .
+    rdfs:comment "Modèle d'IA ayant rédigé la description d'une notice d'autorité (personne, organisation, sujet, lieu, événement)"@fr .
 
-iwac:nerModel a owl:DatatypeProperty ;
+iwac:nerModel a owl:ObjectProperty ;
     rdfs:label "AI Model - NER"@en ;
     rdfs:label "Modèle IA - NER"@fr ;
     rdfs:comment "AI model used for named entity recognition"@en ;
-    rdfs:comment "Modèle d'IA utilisé pour la reconnaissance d'entités nommées"@fr ;
-    rdfs:range xsd:string .
+    rdfs:comment "Modèle d'IA utilisé pour la reconnaissance d'entités nommées"@fr .
 
-iwac:transcriptionModel a owl:DatatypeProperty ;
+iwac:transcriptionModel a owl:ObjectProperty ;
     rdfs:label "AI Model - Transcription"@en ;
     rdfs:label "Modèle IA - Transcription"@fr ;
     rdfs:comment "AI model used for audio/video transcription"@en ;
-    rdfs:comment "Modèle d'IA utilisé pour la transcription audio/vidéo"@fr ;
-    rdfs:range xsd:string .
+    rdfs:comment "Modèle d'IA utilisé pour la transcription audio/vidéo"@fr .
 
 iwac:processingDate a owl:DatatypeProperty ;
     rdfs:label "AI Processing Date"@en ;
