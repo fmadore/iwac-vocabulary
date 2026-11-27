@@ -1,13 +1,13 @@
 # IWAC Vocabulary
 
-RDF vocabulary for the [Islam West Africa Collection (IWAC)](https://islam.zmo.de/s/westafrica/), a digital archive of primary sources on Islam in West Africa hosted by the Leibniz-Zentrum Moderner Orient (ZMO).
+RDF vocabulary for the [Islam West Africa Collection (IWAC)](https://islam.zmo.de/s/westafrica/), a digital collection of primary sources on Islam in West Africa hosted by the Leibniz-Zentrum Moderner Orient (ZMO).
 
 ## Overview
 
 This vocabulary provides properties for:
 
-- **AI Processing Provenance**: Track which AI models generated specific metadata (OCR, summaries, named entity recognition, authority descriptions)
-- **Sentiment Analysis**: Store multi-model sentiment analysis results, one property set per annotator model
+- **AI Processing Provenance**: Track which AI models generated specific metadata (OCR, summaries, named entity recognition, transcriptions, authority descriptions)
+- **Sentiment Analysis**: Store multi-model sentiment analysis results, one property set per annotator model, grouped under shared dimension super-properties
 
 ## Vocabulary Details
 
@@ -17,18 +17,19 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.6 (`owl:versionInfo`), modified 2026-10-23 — not yet tagged or uploaded; [v1.5](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.5) is the last tag |
-| **Properties in this file** | **45** — 9 provenance + 36 sentiment |
-| **Properties installed on `islam.zmo.de`** | **87** (vocabulary 10) — v1.5 installed, read 2026-10-23 |
+| **Version** | 1.7 (`owl:versionInfo`), modified 2026-11-27 — not yet tagged or uploaded; [v1.5](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.5) is the last GitHub tag and pinned namespace copy (v1.6 is installed on `islam.zmo.de`) |
+| **Properties in this file** | **51** — 9 provenance + 6 abstract sentiment super-properties + 36 model-keyed sentiment |
+| **Properties installed on `islam.zmo.de`** | **93** (vocabulary 10) — v1.6 installed, read 2026-11-27 |
 
-> **The file will never converge with the live archive, and that is settled
+> **The file will never converge with the live collection, and that is settled
 > rather than pending: Omeka does not remove a vocabulary property on update.**
 > An update applies additions only. The 2026-08-14 upload was read at the time as
 > Omeka *declining* to apply that round's deletions; it is simply what the
 > operation does. So the live vocabulary is a superset of this file and stays
-> one — 87 installed against 45 declared. The v1.4 upload added Qwen's six and
-> v1.5 added `iwac:descriptionModel`, each removing none of the 48; the v1.6
-> upload will add Claude Haiku 5.5's six and likewise remove nothing.
+> one — 93 installed against 51 declared. The v1.4 upload added Qwen's six,
+> v1.5 added `iwac:descriptionModel`, and v1.6 added Claude Haiku 5.5's six,
+> each removing none of the 48 omitted terms; the v1.7 upload will add the six
+> abstract sentiment super-properties and likewise remove nothing.
 >
 > Two consequences, and they pull in opposite directions:
 >
@@ -51,47 +52,48 @@ This vocabulary provides properties for:
 > vocabulary this file describes. See
 > [Updating an already-imported vocabulary](#updating-an-already-imported-vocabulary).
 >
-> Counts below verified against the live API on **2026-08-25**.
+> Counts below verified against the live API on **2026-11-27**.
 
 ## Properties
 
 ### AI Provenance (9 properties)
 
-Used as value annotations to document which AI model generated specific metadata values.
+Used as value annotations to document which AI model generated specific metadata values. All six `*Model` properties are `owl:ObjectProperty` (sub-properties of `prov:wasAttributedTo`) linking to an AI-model authority item on `islam.zmo.de`.
 
-| Property | Description |
-|----------|-------------|
-| `iwac:ocrModel` | AI model used for text extraction |
-| `iwac:summaryModel` | AI model used for summarization |
-| `iwac:descriptionModel` | AI model that drafted an authority record's `dcterms:description` (v1.5; written by `iwac-ai-pipelines/AI_authority_curation`) |
-| `iwac:nerModel` | AI model used for named entity recognition |
-| `iwac:transcriptionModel` | AI model used for audio/video transcription |
-| `iwac:sentimentModel` | AI model that produced a sentiment annotation — **legacy**, see [Generation 2](#generation-2-2026-07-onwards--30-properties) |
-| `iwac:processingDate` | Date when AI processing was performed |
-| `iwac:confidence` | Confidence score (0-1) |
-| `iwac:modelVersion` | Specific version of the AI model |
+| Property | Type | Status | Description |
+|----------|------|--------|-------------|
+| `iwac:ocrModel` | `owl:ObjectProperty` | Active | AI model used for text extraction |
+| `iwac:summaryModel` | `owl:ObjectProperty` | Active | AI model used for summarization |
+| `iwac:descriptionModel` | `owl:ObjectProperty` | Active | AI model that drafted an authority record's `dcterms:description` (v1.5; written by `iwac-ai-pipelines/AI_authority_curation`) |
+| `iwac:nerModel` | `owl:ObjectProperty` | Active | AI model used for named entity recognition |
+| `iwac:transcriptionModel` | `owl:ObjectProperty` | Active | AI model used for audio/video transcription |
+| `iwac:sentimentModel` | `owl:ObjectProperty` | Deprecated (`owl:deprecated true`) | Legacy AI model link for sentiment — see [Generation 2](#generation-2-2026-07-onwards--36-properties) |
+| `iwac:processingDate` | `owl:DatatypeProperty` (`xsd:date`) | Reserved | Date when AI processing was performed (not currently written by pipelines) |
+| `iwac:confidence` | `owl:DatatypeProperty` (`xsd:decimal`) | Reserved | Confidence score (0-1) (not currently written by pipelines) |
+| `iwac:modelVersion` | `owl:DatatypeProperty` (`xsd:string`) | Reserved | Specific version of the AI model (not currently written by pipelines) |
 
-These are live and in use: `iwac:ocrModel` and `iwac:summaryModel` are written on
-every OCR and summary run. A query cannot see them (annotations are unindexed),
-but a `GET` on any article shows them — e.g. item 2233 carries
-`iwac:summaryModel` → `GPT-5.6 Luna` on both its French and English
-`bibo:shortDescription`.
+The five active `*Model` properties are written on live pipeline runs as
+`resource:item` value annotations. A query cannot see them (annotations are
+unindexed), but a `GET` on any annotated item shows them — e.g. item 2233
+carries `iwac:summaryModel` → `GPT-5.6 Luna` (`79610`) on both its French and
+English `bibo:shortDescription`, and `iwac:nerModel` → `Claude Haiku 5.5`
+(`125443`) on its AI-linked subjects and places.
 
-### Sentiment Analysis (36 properties)
+### Sentiment Analysis (6 super-properties + 36 model-keyed properties)
 
-Each annotator model has 6 properties:
+Each annotator model has 6 properties, each linked via `rdfs:subPropertyOf` to an abstract dimension super-property so RDFS/SPARQL consumers can query across models without enumerating every model prefix:
 
-| Property Pattern | Description |
-|------------------|-------------|
-| `iwac:{model}Centralite` | Centrality level of Islam/Muslims in the article |
-| `iwac:{model}CentraliteJustification` | Explanation for centrality rating |
-| `iwac:{model}Polarite` | Sentiment polarity toward Islam/Muslims |
-| `iwac:{model}PolariteJustification` | Explanation for polarity rating |
-| `iwac:{model}SubjectiviteScore` | Subjectivity level — a 1–5 integer in generation 1, a label in generation 2 |
-| `iwac:{model}SubjectiviteJustification` | Explanation for subjectivity score |
+| Property Pattern | Super-property | Type / Range | Description |
+|------------------|----------------|--------------|-------------|
+| `iwac:{model}Centralite` | `iwac:centralite` | `owl:ObjectProperty` | Centrality level of Islam/Muslims in the article |
+| `iwac:{model}CentraliteJustification` | `iwac:centraliteJustification` | `owl:DatatypeProperty` (`rdf:langString`) | Explanation for centrality rating (`@fr`) |
+| `iwac:{model}Polarite` | `iwac:polarite` | `owl:ObjectProperty` | Sentiment polarity toward Islam/Muslims |
+| `iwac:{model}PolariteJustification` | `iwac:polariteJustification` | `owl:DatatypeProperty` (`rdf:langString`) | Explanation for polarity rating (`@fr`) |
+| `iwac:{model}SubjectiviteScore` | `iwac:subjectiviteScore` | `owl:ObjectProperty` | Subjectivity level — a 1–5 integer in generation 1, a label in generation 2 |
+| `iwac:{model}SubjectiviteJustification` | `iwac:subjectiviteJustification` | `owl:DatatypeProperty` (`rdf:langString`) | Explanation for subjectivity score (`@fr`) |
 
 **Only generation 2 carries values.** The vendor-keyed generation-1 sets and the
-retired DeepSeek preview were emptied on the live archive on 2026-08-07 and
+retired DeepSeek preview were emptied on the live collection on 2026-08-07 and
 dropped from this file. Their *declarations* survive on Omeka permanently — an
 update never removes a property — so a property list read from the API will
 always show more than this file declares. See [Generation 1](#generation-1-januaryfebruary-2026--archived-on-hugging-face)
@@ -103,22 +105,22 @@ Keyed by **model**. The property name *is* the provenance, and it has to be:
 Omeka does not index value annotations, so a model recorded only in an
 `iwac:sentimentModel` annotation would be invisible to every query. The
 annotation was written on 2026-07-31 and dropped the same day for that reason;
-`iwac:sentimentModel` survives in the ontology for historical values, and the
-current pipeline does not write it.
+`iwac:sentimentModel` survives in the ontology (`owl:deprecated true`) for
+historical values, and the current pipeline does not write it.
 
 | Property prefix | Model id | Authority item | Hugging Face column prefix |
 |---|---|---|---|
 | `iwac:gpt56Luna*` | `gpt-5.6-luna` | 79610 | `gpt_5_6_luna_` |
 | `iwac:mistralSmall2603*` | `mistral-small-2603` | 79614 | `mistral_small_2603_` |
 | `iwac:deepseekV4Flash0731*` | `deepseek/deepseek-v4-flash-0731` | 83261 | `deepseek_v4_flash_0731_` |
-| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | — (complete on Omeka, not yet exported) |
-| `iwac:qwen3827b*` | `Qwen/Qwen3.8-27B` (self-hosted) | 111933 | — (final on Omeka, not yet exported) |
-| `iwac:claudeHaiku55*` | `claude-haiku-5-5` | 125443 | — (declared in v1.6, not yet annotated) |
+| `iwac:gemma431bIt*` | `google/gemma-4-31b-it` | 111663 | `gemma_4_31b_it_` |
+| `iwac:qwen3827b*` | `Qwen/Qwen3.8-27B` (self-hosted) | 111933 | `qwen3_8_27b_` |
+| `iwac:claudeHaiku55*` | `claude-haiku-5-5` | 125443 | `claude_haiku_5_5_` |
 
 **Qwen3.8 27B joined as a fifth member on 2026-08-25, and it is the first whose
 annotations were produced on hardware in the building** rather than through
 anyone's API — served with vLLM on the University of Bayreuth's Festus cluster.
-Two things follow that the other four cannot claim. Its answers cost queue time
+Two things follow that the other five cannot claim. Its answers cost queue time
 instead of tokens, so re-running the panel over the corpus is not a budget
 decision; and the run is reproducible without a third party consenting to serve
 the weights, which is the strongest form of the archivability argument that also
@@ -132,15 +134,20 @@ It must never be promoted alongside this one: a panel that counts one reading of
 the construct as two is measuring its own routing.
 
 **Claude Haiku 5.5 joined as a sixth member on 2026-10-22**, promoted without a
-pilot at the curator's decision. Its six properties are declared in v1.6 and
-carry no values until its corpus pass runs.
+pilot at the curator's decision. Its six properties were installed in v1.6
+(IDs 399–404), and its 2026-10-23 corpus pass annotated **16,617** articles —
+covering the expanded corpus beyond the earlier five members' August campaign
+ceiling — and is exported to Hugging Face as `claude_haiku_5_5_*`.
 
-##### Population (live, 2026-08-25)
+##### Population (live, 2026-11-27)
 
-The annotated universe is **12,298** of the 12,349 `bibo:Article` items — the
-Français and Anglais ones. The other 51 (Ewé 32, Kabiyè 11, Dendi 2, no language
-6) are skipped deliberately: the prompt is French, and a French-prompted model
-returns confident but unusable output for them rather than failing visibly.
+`bibo:Article` (class 36) currently holds **16,715** public items. Only
+Français and Anglais articles are annotated (Ewé, Kabiyè, Dendi, and untagged
+items are skipped deliberately: the prompt is French, and a French-prompted
+model returns confident but unusable output for them rather than failing
+visibly). The first five members sit at their August 2026 campaign ceiling
+(**12,298**), while Claude Haiku 5.5 ran in October 2026 after ~4,300 new
+articles arrived:
 
 | Property prefix | Centralité | Polarité | Subjectivité | …Justification (C / P / S) |
 |---|---:|---:|---:|---|
@@ -149,6 +156,7 @@ returns confident but unusable output for them rather than failing visibly.
 | `iwac:deepseekV4Flash0731*` | 12,298 | 12,298 | **11,809** | 12,298 / 12,298 / 12,297 |
 | `iwac:gemma431bIt*` | 12,298 | 12,298 | **12,055** | 12,298 / 12,298 / 12,298 |
 | `iwac:qwen3827b*` | 12,098 | 12,098 | **11,811** | 12,098 / 12,095 / 12,094 |
+| `iwac:claudeHaiku55*` | 16,617 | 16,617 | **16,112** | 16,617 / 16,617 / 16,617 |
 
 **Qwen is 200 short of the ceiling on every property, and that is the intended
 final state.** Written 2026-08-25 from a self-hosted run on Festus, imported
@@ -200,29 +208,27 @@ score objectivity on an article it judged `Non abordé` is not disagreeing about
 objectivity — it is saying the article is not about Islam. Condition on
 centralité before aligning models, never on the subjectivité nulls.
 
-**The Google slot has never held a value, and on 2026-08-14 it changed occupant
-rather than contents.** It was `iwac:gemini35FlashLite*` from 2026-07-31,
-declared on Omeka and verified at 0 items on the day of the swap; this file now
-declares `iwac:gemma431bIt*` instead. The 2026-08-14 upload added Gemma's six
-and left Flash-Lite's six installed and empty, where they remain. Because
-Flash-Lite never ran, nothing is mixed and generation 2 is unchanged by the
-substitution. Neither prefix has a
-Hugging Face column on either dataset repo — do not write code expecting a
-`gemini_3_5_flash_lite_*` one, and `gemma_4_31b_it_*` will not exist until a run
-produces values and the uploader's panel is extended to carry them.
+**The Google slot changed occupant on 2026-08-14 before holding any values.**
+It was `iwac:gemini35FlashLite*` from 2026-07-31, declared on Omeka and
+verified at 0 items on the day of the swap; this file declares
+`iwac:gemma431bIt*` instead. The 2026-08-14 upload added Gemma's six and left
+Flash-Lite's six installed and empty, where they remain. Because Flash-Lite
+never ran, nothing is mixed and generation 2 is unchanged by the substitution.
+Do not write code expecting a `gemini_3_5_flash_lite_*` column on Hugging Face;
+Gemma's values are exported under `gemma_4_31b_it_*`.
 
 Every member is its vendor's **high-volume tier**, which is what makes the panel
 a panel rather than a quality ladder — and it is why the Google slot moved: at
 $0.30/$2.50 per 1M, Flash-Lite was the panel's remaining cost outlier at roughly
-four times a DeepSeek pass, where Gemma sits at $0.09/$0.34. **Four of the five
-are now open weights** and can be re-run locally — Gemma 4 31B and Mistral
+four times a DeepSeek pass, where Gemma sits at $0.09/$0.34. **Four of the six
+are open weights** and can be re-run locally — Gemma 4 31B and Mistral
 Small 4 under Apache-2.0, DeepSeek V4 Flash under MIT, and Qwen3.8 27B, which already
 runs on Festus — though at 31B and 27B (dense), 6.5B and 13B active
 parameters the spread is a factor of five where the previous pair sat inside a
 factor of two, so an agreement figure among them does slightly
-more to measure model size than it used to. For an archive the trade is still
-worth it: it is the difference between an annotation you can cite and one that
-can only be taken on trust.
+more to measure model size than it used to. For a digital collection the trade
+is still worth it: it is the difference between an annotation you can cite and
+one that can only be taken on trust.
 
 Gemma is routed through **OpenRouter**, never `GEMINI_API_KEY`: it is
 free-of-charge on the Gemini API with no paid tier, and Google's pricing page
@@ -232,7 +238,9 @@ the request body is a whole archival article.
 `Centralite`, `Polarite` and `SubjectiviteScore` are `owl:ObjectProperty` here,
 which is what the pipeline actually writes — links into the controlled
 vocabulary, not strings. The generation-1 declarations called two of the three
-`owl:DatatypeProperty`, which never matched.
+`owl:DatatypeProperty`, which never matched. Their three `*Justification`
+companions are `owl:DatatypeProperty` with `rdfs:range rdf:langString`, matching
+the `@fr` language tags emitted on every live justification.
 
 **Four** slots were declared and never written, and this file drops all
 twenty-four of their properties: `iwac:qwen35A3b*` (3B active, a quarter of the
@@ -312,7 +320,7 @@ curl -fsSO https://raw.githubusercontent.com/fmadore/iwac-vocabulary/main/iwac-v
 ### Resolving the namespace
 
 Since 2026-10-19 `https://islam.zmo.de/ontology/iwac` resolves, so every
-`iwac:` term in the archive's public API (Omeka's `/api-context` maps the prefix
+`iwac:` term in the collection's public API (Omeka's `/api-context` maps the prefix
 to this namespace) can be looked up. It is a hash namespace, so the one document
 describes every term:
 
@@ -345,7 +353,7 @@ preview. Avoid it.)
 Adding a property is safe, and updating never removes one: a property absent
 from the uploaded file stays installed with its values (see the note at the
 top). Removing a property is a separate, manual step, and **that does delete
-every value stored under it across the archive**. Always pre-flight:
+every value stored under it across the collection**. Always pre-flight:
 
 ```bash
 python AI_sentiment_analysis/00_setup_properties.py --verify
@@ -442,7 +450,7 @@ is a link into the controlled vocabulary:
 
 ## Related Projects
 
-- [Islam West Africa Collection](https://islam.zmo.de/s/westafrica/) — the digital archive (French UI: [`/s/afrique_ouest/`](https://islam.zmo.de/s/afrique_ouest/))
+- [Islam West Africa Collection](https://islam.zmo.de/s/westafrica/) — the digital collection (French UI: [`/s/afrique_ouest/`](https://islam.zmo.de/s/afrique_ouest/))
 - [IWAC on Hugging Face](https://huggingface.co/datasets/fmadore/islam-west-africa-collection) — dataset export; the sentiment columns are the values stored under these properties
 - [IWAC AI Pipelines](https://github.com/fmadore/iwac-ai-pipelines) — the code that writes them, and where `00_setup_properties.py` lives
 - [IWAC Sentiment Analysis](https://github.com/fmadore/IWAC-sentiment-analysis) — inter-model agreement dashboard
@@ -465,5 +473,5 @@ only; the annotations stored under it in the IWAC dataset are
 ## Author
 
 [Frédérick Madore](https://frederickmadore.com/) ([ORCID 0000-0003-0959-2092](https://orcid.org/0000-0003-0959-2092)),
-University of Bayreuth. The IWAC archive is hosted by the Leibniz-Zentrum
-Moderner Orient (ZMO), Berlin.
+University of Bayreuth. The IWAC digital collection is hosted by the
+Leibniz-Zentrum Moderner Orient (ZMO), Berlin.

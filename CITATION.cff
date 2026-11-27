@@ -3,11 +3,11 @@ message: >-
   If you reuse this vocabulary, or cite metadata annotated with it,
   please cite the repository as below.
 title: "IWAC Vocabulary"
-version: "1.5"
-date-released: 2026-10-19
+version: "1.7"
+date-released: 2026-11-27
 abstract: >-
   An RDF vocabulary for recording AI processing provenance and multi-model
-  sentiment annotation in a digital archive. It defines value-annotation
+  sentiment annotation in a digital collection. It defines value-annotation
   properties naming the model behind an OCR pass, summary, transcription,
   named-entity run or authority description, and a model-keyed property set
   that stores the centrality, polarity and subjectivity readings of a panel
@@ -25,7 +25,7 @@ keywords:
   - large language models
   - sentiment analysis
   - provenance
-  - digital archives
+  - digital collections
   - African studies
 license: CC0-1.0
 repository-code: https://github.com/fmadore/iwac-vocabulary
