@@ -17,7 +17,7 @@ This vocabulary provides properties for:
 | **Prefix** | `iwac` |
 | **Format** | Turtle (.ttl) |
 | **Languages** | English, French |
-| **Version** | 1.7 (`owl:versionInfo`), modified 2026-11-27 — not yet tagged or uploaded; [v1.5](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.5) is the last GitHub tag and pinned namespace copy (v1.6 is installed on `islam.zmo.de`) |
+| **Version** | [1.7](https://github.com/fmadore/iwac-vocabulary/releases/tag/v1.7) (`owl:versionInfo`), modified 2026-11-27 — tagged; v1.6 is currently installed on `islam.zmo.de` and v1.5 is currently pinned at `/ontology/iwac` |
 | **Properties in this file** | **51** — 9 provenance + 6 abstract sentiment super-properties + 36 model-keyed sentiment |
 | **Properties installed on `islam.zmo.de`** | **93** (vocabulary 10) — v1.6 installed, read 2026-11-27 |
 
