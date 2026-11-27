@@ -109,7 +109,7 @@ iwac:gemma431bItCentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemma 4 31B - Justification centralité"@fr ;
     rdfs:comment "Gemma 4 31B's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Gemma 4 31B pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:gemma431bItPolarite a owl:ObjectProperty ;
     rdfs:label "Gemma 4 31B - Polarity"@en ;
@@ -122,7 +122,7 @@ iwac:gemma431bItPolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemma 4 31B - Justification polarité"@fr ;
     rdfs:comment "Gemma 4 31B's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Gemma 4 31B pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:gemma431bItSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Gemma 4 31B - Subjectivity Score"@en ;
@@ -135,7 +135,7 @@ iwac:gemma431bItSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemma 4 31B - Justification subjectivité"@fr ;
     rdfs:comment "Gemma 4 31B's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Gemma 4 31B pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 
 # --- GPT-5.6 Luna (gpt-5.6-luna) -> HF prefix gpt_5_6_luna_ ---
@@ -151,7 +151,7 @@ iwac:gpt56LunaCentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "GPT-5.6 Luna - Justification centralité"@fr ;
     rdfs:comment "GPT-5.6 Luna's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de GPT-5.6 Luna pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:gpt56LunaPolarite a owl:ObjectProperty ;
     rdfs:label "GPT-5.6 Luna - Polarity"@en ;
@@ -164,7 +164,7 @@ iwac:gpt56LunaPolariteJustification a owl:DatatypeProperty ;
     rdfs:label "GPT-5.6 Luna - Justification polarité"@fr ;
     rdfs:comment "GPT-5.6 Luna's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de GPT-5.6 Luna pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:gpt56LunaSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "GPT-5.6 Luna - Subjectivity Score"@en ;
@@ -177,7 +177,7 @@ iwac:gpt56LunaSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "GPT-5.6 Luna - Justification subjectivité"@fr ;
     rdfs:comment "GPT-5.6 Luna's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de GPT-5.6 Luna pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 
 # --- Mistral Small 4 (mistral-small-2603) -> HF prefix mistral_small_2603_ ---
@@ -193,7 +193,7 @@ iwac:mistralSmall2603CentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral Small 4 - Justification centralité"@fr ;
     rdfs:comment "Mistral Small 4's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Mistral Small 4 pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:mistralSmall2603Polarite a owl:ObjectProperty ;
     rdfs:label "Mistral Small 4 - Polarity"@en ;
@@ -206,7 +206,7 @@ iwac:mistralSmall2603PolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral Small 4 - Justification polarité"@fr ;
     rdfs:comment "Mistral Small 4's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Mistral Small 4 pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:mistralSmall2603SubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Mistral Small 4 - Subjectivity Score"@en ;
@@ -219,7 +219,7 @@ iwac:mistralSmall2603SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral Small 4 - Justification subjectivité"@fr ;
     rdfs:comment "Mistral Small 4's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Mistral Small 4 pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 
 # --- DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731) -> HF prefix deepseek_v4_flash_0731_ ---
@@ -235,7 +235,7 @@ iwac:deepseekV4Flash0731CentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Justification centralité"@fr ;
     rdfs:comment "DeepSeek V4 Flash 0731's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de DeepSeek V4 Flash 0731 pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:deepseekV4Flash0731Polarite a owl:ObjectProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Polarity"@en ;
@@ -248,7 +248,7 @@ iwac:deepseekV4Flash0731PolariteJustification a owl:DatatypeProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Justification polarité"@fr ;
     rdfs:comment "DeepSeek V4 Flash 0731's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de DeepSeek V4 Flash 0731 pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:deepseekV4Flash0731SubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Subjectivity Score"@en ;
@@ -261,7 +261,7 @@ iwac:deepseekV4Flash0731SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Justification subjectivité"@fr ;
     rdfs:comment "DeepSeek V4 Flash 0731's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de DeepSeek V4 Flash 0731 pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 
 # --- Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B) -> HF prefix qwen3_8_27b_ ---
@@ -277,7 +277,7 @@ iwac:qwen3827bCentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Justification centralité"@fr ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:qwen3827bPolarite a owl:ObjectProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Polarity"@en ;
@@ -290,7 +290,7 @@ iwac:qwen3827bPolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Justification polarité"@fr ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:qwen3827bSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Subjectivity Score"@en ;
@@ -303,7 +303,7 @@ iwac:qwen3827bSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Justification subjectivité"@fr ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 
 # --- Claude Haiku 5.5 (claude-haiku-5-5) -> HF prefix claude_haiku_5_5_ ---
@@ -319,7 +319,7 @@ iwac:claudeHaiku55CentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Claude Haiku 5.5 - Justification centralité"@fr ;
     rdfs:comment "Claude Haiku 5.5's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Claude Haiku 5.5 pour le niveau de centralité attribué"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:claudeHaiku55Polarite a owl:ObjectProperty ;
     rdfs:label "Claude Haiku 5.5 - Polarity"@en ;
@@ -332,7 +332,7 @@ iwac:claudeHaiku55PolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Claude Haiku 5.5 - Justification polarité"@fr ;
     rdfs:comment "Claude Haiku 5.5's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Claude Haiku 5.5 pour la polarité attribuée"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
 iwac:claudeHaiku55SubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Claude Haiku 5.5 - Subjectivity Score"@en ;
@@ -345,5 +345,5 @@ iwac:claudeHaiku55SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Claude Haiku 5.5 - Justification subjectivité"@fr ;
     rdfs:comment "Claude Haiku 5.5's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Claude Haiku 5.5 pour le score de subjectivité"@fr ;
-    rdfs:range xsd:string .
+    rdfs:range rdf:langString .
 
