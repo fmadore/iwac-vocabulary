@@ -445,6 +445,7 @@ is a link into the controlled vocabulary:
 | File | What it is |
 |---|---|
 | [`iwac-vocabulary.ttl`](iwac-vocabulary.ttl) | The vocabulary. Generated from `PANEL`; do not hand-edit the sentiment blocks. |
+| [`scripts/validate.py`](scripts/validate.py) | Validates Turtle syntax, FAIR metadata, Omeka/pipeline contracts, `CITATION.cff`, and README anchors (also run in CI). |
 | [`CITATION.cff`](CITATION.cff) | Citation metadata. |
 | [`LICENSE`](LICENSE) | CC0 1.0 Universal. |
 

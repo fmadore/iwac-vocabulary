@@ -1,0 +1,26 @@
+name: Validate vocabulary
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install validation dependencies
+        run: python -m pip install --no-cache-dir rdflib==7.6.0 PyYAML==6.0.4
+
+      - name: Validate Turtle, CITATION.cff, and README
+        run: python scripts/validate.py
