@@ -4,6 +4,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix vann: <http://purl.org/vocab/vann/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix iwac: <https://islam.zmo.de/ontology/iwac#> .
 
 # ============================================
@@ -20,13 +21,13 @@ iwac: a owl:Ontology ;
     dcterms:description "Vocabulary for the Islam West Africa Collection, covering AI processing provenance and sentiment analysis metadata"@en ;
     dcterms:description "Vocabulaire pour la Collection Islam Afrique de l'Ouest, couvrant la provenance du traitement IA et les métadonnées d'analyse de sentiment"@fr ;
     dcterms:created "2026-01-26"^^xsd:date ;
-    dcterms:modified "2026-10-23"^^xsd:date ;
+    dcterms:modified "2026-11-27"^^xsd:date ;
     dcterms:creator <https://orcid.org/0000-0003-0959-2092> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     vann:preferredNamespacePrefix "iwac" ;
     vann:preferredNamespaceUri "https://islam.zmo.de/ontology/iwac#" ;
-    owl:versionIRI <https://raw.githubusercontent.com/fmadore/iwac-vocabulary/v1.6/iwac-vocabulary.ttl> ;
-    owl:versionInfo "1.6" .
+    owl:versionIRI <https://raw.githubusercontent.com/fmadore/iwac-vocabulary/v1.7/iwac-vocabulary.ttl> ;
+    owl:versionInfo "1.7" .
 
 # ============================================
 # AI PROVENANCE PROPERTIES
@@ -38,6 +39,7 @@ iwac:ocrModel a owl:ObjectProperty ;
     rdfs:label "Modèle IA - OCR"@fr ;
     rdfs:comment "AI model used for optical character recognition and text extraction"@en ;
     rdfs:comment "Modèle d'IA utilisé pour la reconnaissance optique de caractères et l'extraction de texte"@fr ;
+    rdfs:subPropertyOf prov:wasAttributedTo ;
     rdfs:isDefinedBy iwac: .
 
 iwac:summaryModel a owl:ObjectProperty ;
@@ -45,6 +47,7 @@ iwac:summaryModel a owl:ObjectProperty ;
     rdfs:label "Modèle IA - Résumé"@fr ;
     rdfs:comment "AI model used to generate summaries or descriptions"@en ;
     rdfs:comment "Modèle d'IA utilisé pour générer des résumés ou descriptions"@fr ;
+    rdfs:subPropertyOf prov:wasAttributedTo ;
     rdfs:isDefinedBy iwac: .
 
 iwac:descriptionModel a owl:ObjectProperty ;
@@ -52,6 +55,7 @@ iwac:descriptionModel a owl:ObjectProperty ;
     rdfs:label "Modèle IA - Description"@fr ;
     rdfs:comment "AI model that drafted the description of an authority record (person, organisation, subject, place, event)"@en ;
     rdfs:comment "Modèle d'IA ayant rédigé la description d'une notice d'autorité (personne, organisation, sujet, lieu, événement)"@fr ;
+    rdfs:subPropertyOf prov:wasAttributedTo ;
     rdfs:isDefinedBy iwac: .
 
 iwac:nerModel a owl:ObjectProperty ;
@@ -59,6 +63,7 @@ iwac:nerModel a owl:ObjectProperty ;
     rdfs:label "Modèle IA - NER"@fr ;
     rdfs:comment "AI model used for named entity recognition"@en ;
     rdfs:comment "Modèle d'IA utilisé pour la reconnaissance d'entités nommées"@fr ;
+    rdfs:subPropertyOf prov:wasAttributedTo ;
     rdfs:isDefinedBy iwac: .
 
 iwac:transcriptionModel a owl:ObjectProperty ;
@@ -66,6 +71,7 @@ iwac:transcriptionModel a owl:ObjectProperty ;
     rdfs:label "Modèle IA - Transcription"@fr ;
     rdfs:comment "AI model used for audio/video transcription"@en ;
     rdfs:comment "Modèle d'IA utilisé pour la transcription audio/vidéo"@fr ;
+    rdfs:subPropertyOf prov:wasAttributedTo ;
     rdfs:isDefinedBy iwac: .
 
 iwac:processingDate a owl:DatatypeProperty ;
@@ -102,7 +108,9 @@ iwac:modelVersion a owl:DatatypeProperty ;
 # the current pipeline does not write it.
 #
 # Centralité, polarité and the subjectivité score are links into the
-# controlled vocabulary, so they are ObjectProperties here.
+# controlled vocabulary, so they are ObjectProperties here. Each
+# per-model property is linked to a shared dimension super-property
+# via rdfs:subPropertyOf.
 #
 # The panel is defined once in AI_sentiment_analysis/sentiment_core.py
 # (PANEL); this block is generated from it by 00_setup_properties.py.
@@ -112,8 +120,57 @@ iwac:sentimentModel a owl:ObjectProperty ;
     rdfs:label "Modèle IA - Sentiment"@fr ;
     rdfs:comment "Legacy value-annotation link to the AI model; retained for historical data but not written by the current model-keyed panel"@en ;
     rdfs:comment "Ancien lien d'annotation de valeur vers le modèle d'IA ; conservé pour les données historiques mais non écrit par le panel actuel"@fr ;
+    rdfs:subPropertyOf prov:wasAttributedTo ;
     owl:deprecated true ;
     rdfs:isDefinedBy iwac: .
+
+# --- Abstract dimension super-properties ---
+
+iwac:centralite a owl:ObjectProperty ;
+    rdfs:label "Sentiment - Centrality"@en ;
+    rdfs:label "Sentiment - Centralité"@fr ;
+    rdfs:comment "Abstract super-property for model-keyed centrality ratings of Islam/Muslims"@en ;
+    rdfs:comment "Super-propriété abstraite pour les niveaux de centralité de l'islam/musulmans par modèle"@fr ;
+    rdfs:isDefinedBy iwac: .
+
+iwac:centraliteJustification a owl:DatatypeProperty ;
+    rdfs:label "Sentiment - Centrality Justification"@en ;
+    rdfs:label "Sentiment - Justification centralité"@fr ;
+    rdfs:comment "Abstract super-property for model-keyed explanations of assigned centrality levels"@en ;
+    rdfs:comment "Super-propriété abstraite pour les explications du niveau de centralité attribué par modèle"@fr ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy iwac: .
+
+iwac:polarite a owl:ObjectProperty ;
+    rdfs:label "Sentiment - Polarity"@en ;
+    rdfs:label "Sentiment - Polarité"@fr ;
+    rdfs:comment "Abstract super-property for model-keyed sentiment polarity ratings toward Islam/Muslims"@en ;
+    rdfs:comment "Super-propriété abstraite pour les polarités de sentiment envers l'islam/musulmans par modèle"@fr ;
+    rdfs:isDefinedBy iwac: .
+
+iwac:polariteJustification a owl:DatatypeProperty ;
+    rdfs:label "Sentiment - Polarity Justification"@en ;
+    rdfs:label "Sentiment - Justification polarité"@fr ;
+    rdfs:comment "Abstract super-property for model-keyed explanations of assigned polarity ratings"@en ;
+    rdfs:comment "Super-propriété abstraite pour les explications de la polarité attribuée par modèle"@fr ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy iwac: .
+
+iwac:subjectiviteScore a owl:ObjectProperty ;
+    rdfs:label "Sentiment - Subjectivity Score"@en ;
+    rdfs:label "Sentiment - Score subjectivité"@fr ;
+    rdfs:comment "Abstract super-property for model-keyed subjectivity ratings"@en ;
+    rdfs:comment "Super-propriété abstraite pour les niveaux de subjectivité par modèle"@fr ;
+    rdfs:isDefinedBy iwac: .
+
+iwac:subjectiviteJustification a owl:DatatypeProperty ;
+    rdfs:label "Sentiment - Subjectivity Justification"@en ;
+    rdfs:label "Sentiment - Justification subjectivité"@fr ;
+    rdfs:comment "Abstract super-property for model-keyed explanations of assigned subjectivity scores"@en ;
+    rdfs:comment "Super-propriété abstraite pour les explications du score de subjectivité par modèle"@fr ;
+    rdfs:range rdf:langString ;
+    rdfs:isDefinedBy iwac: .
+
 
 # --- Gemma 4 31B (google/gemma-4-31b-it) -> HF prefix gemma_4_31b_it_ ---
 
@@ -122,6 +179,7 @@ iwac:gemma431bItCentralite a owl:ObjectProperty ;
     rdfs:label "Gemma 4 31B - Centralité"@fr ;
     rdfs:comment "Level of centrality of Islam/Muslims according to Gemma 4 31B (google/gemma-4-31b-it)"@en ;
     rdfs:comment "Niveau de centralité de l'islam/musulmans selon Gemma 4 31B (google/gemma-4-31b-it)"@fr ;
+    rdfs:subPropertyOf iwac:centralite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:gemma431bItCentraliteJustification a owl:DatatypeProperty ;
@@ -129,6 +187,7 @@ iwac:gemma431bItCentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemma 4 31B - Justification centralité"@fr ;
     rdfs:comment "Gemma 4 31B's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Gemma 4 31B pour le niveau de centralité attribué"@fr ;
+    rdfs:subPropertyOf iwac:centraliteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -137,6 +196,7 @@ iwac:gemma431bItPolarite a owl:ObjectProperty ;
     rdfs:label "Gemma 4 31B - Polarité"@fr ;
     rdfs:comment "Sentiment toward Islam/Muslims according to Gemma 4 31B (google/gemma-4-31b-it)"@en ;
     rdfs:comment "Sentiment envers l'islam/musulmans selon Gemma 4 31B (google/gemma-4-31b-it)"@fr ;
+    rdfs:subPropertyOf iwac:polarite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:gemma431bItPolariteJustification a owl:DatatypeProperty ;
@@ -144,6 +204,7 @@ iwac:gemma431bItPolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemma 4 31B - Justification polarité"@fr ;
     rdfs:comment "Gemma 4 31B's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Gemma 4 31B pour la polarité attribuée"@fr ;
+    rdfs:subPropertyOf iwac:polariteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -152,6 +213,7 @@ iwac:gemma431bItSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Gemma 4 31B - Score subjectivité"@fr ;
     rdfs:comment "Labelled subjectivity level according to Gemma 4 31B (google/gemma-4-31b-it), linked to controlled vocabulary item"@en ;
     rdfs:comment "Niveau de subjectivité libellé selon Gemma 4 31B (google/gemma-4-31b-it), lié à un élément de vocabulaire contrôlé"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteScore ;
     rdfs:isDefinedBy iwac: .
 
 iwac:gemma431bItSubjectiviteJustification a owl:DatatypeProperty ;
@@ -159,6 +221,7 @@ iwac:gemma431bItSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Gemma 4 31B - Justification subjectivité"@fr ;
     rdfs:comment "Gemma 4 31B's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Gemma 4 31B pour le score de subjectivité"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -170,6 +233,7 @@ iwac:gpt56LunaCentralite a owl:ObjectProperty ;
     rdfs:label "GPT-5.6 Luna - Centralité"@fr ;
     rdfs:comment "Level of centrality of Islam/Muslims according to GPT-5.6 Luna (gpt-5.6-luna)"@en ;
     rdfs:comment "Niveau de centralité de l'islam/musulmans selon GPT-5.6 Luna (gpt-5.6-luna)"@fr ;
+    rdfs:subPropertyOf iwac:centralite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:gpt56LunaCentraliteJustification a owl:DatatypeProperty ;
@@ -177,6 +241,7 @@ iwac:gpt56LunaCentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "GPT-5.6 Luna - Justification centralité"@fr ;
     rdfs:comment "GPT-5.6 Luna's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de GPT-5.6 Luna pour le niveau de centralité attribué"@fr ;
+    rdfs:subPropertyOf iwac:centraliteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -185,6 +250,7 @@ iwac:gpt56LunaPolarite a owl:ObjectProperty ;
     rdfs:label "GPT-5.6 Luna - Polarité"@fr ;
     rdfs:comment "Sentiment toward Islam/Muslims according to GPT-5.6 Luna (gpt-5.6-luna)"@en ;
     rdfs:comment "Sentiment envers l'islam/musulmans selon GPT-5.6 Luna (gpt-5.6-luna)"@fr ;
+    rdfs:subPropertyOf iwac:polarite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:gpt56LunaPolariteJustification a owl:DatatypeProperty ;
@@ -192,6 +258,7 @@ iwac:gpt56LunaPolariteJustification a owl:DatatypeProperty ;
     rdfs:label "GPT-5.6 Luna - Justification polarité"@fr ;
     rdfs:comment "GPT-5.6 Luna's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de GPT-5.6 Luna pour la polarité attribuée"@fr ;
+    rdfs:subPropertyOf iwac:polariteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -200,6 +267,7 @@ iwac:gpt56LunaSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "GPT-5.6 Luna - Score subjectivité"@fr ;
     rdfs:comment "Labelled subjectivity level according to GPT-5.6 Luna (gpt-5.6-luna), linked to controlled vocabulary item"@en ;
     rdfs:comment "Niveau de subjectivité libellé selon GPT-5.6 Luna (gpt-5.6-luna), lié à un élément de vocabulaire contrôlé"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteScore ;
     rdfs:isDefinedBy iwac: .
 
 iwac:gpt56LunaSubjectiviteJustification a owl:DatatypeProperty ;
@@ -207,6 +275,7 @@ iwac:gpt56LunaSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "GPT-5.6 Luna - Justification subjectivité"@fr ;
     rdfs:comment "GPT-5.6 Luna's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de GPT-5.6 Luna pour le score de subjectivité"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -218,6 +287,7 @@ iwac:mistralSmall2603Centralite a owl:ObjectProperty ;
     rdfs:label "Mistral Small 4 - Centralité"@fr ;
     rdfs:comment "Level of centrality of Islam/Muslims according to Mistral Small 4 (mistral-small-2603)"@en ;
     rdfs:comment "Niveau de centralité de l'islam/musulmans selon Mistral Small 4 (mistral-small-2603)"@fr ;
+    rdfs:subPropertyOf iwac:centralite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:mistralSmall2603CentraliteJustification a owl:DatatypeProperty ;
@@ -225,6 +295,7 @@ iwac:mistralSmall2603CentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral Small 4 - Justification centralité"@fr ;
     rdfs:comment "Mistral Small 4's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Mistral Small 4 pour le niveau de centralité attribué"@fr ;
+    rdfs:subPropertyOf iwac:centraliteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -233,6 +304,7 @@ iwac:mistralSmall2603Polarite a owl:ObjectProperty ;
     rdfs:label "Mistral Small 4 - Polarité"@fr ;
     rdfs:comment "Sentiment toward Islam/Muslims according to Mistral Small 4 (mistral-small-2603)"@en ;
     rdfs:comment "Sentiment envers l'islam/musulmans selon Mistral Small 4 (mistral-small-2603)"@fr ;
+    rdfs:subPropertyOf iwac:polarite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:mistralSmall2603PolariteJustification a owl:DatatypeProperty ;
@@ -240,6 +312,7 @@ iwac:mistralSmall2603PolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral Small 4 - Justification polarité"@fr ;
     rdfs:comment "Mistral Small 4's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Mistral Small 4 pour la polarité attribuée"@fr ;
+    rdfs:subPropertyOf iwac:polariteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -248,6 +321,7 @@ iwac:mistralSmall2603SubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Mistral Small 4 - Score subjectivité"@fr ;
     rdfs:comment "Labelled subjectivity level according to Mistral Small 4 (mistral-small-2603), linked to controlled vocabulary item"@en ;
     rdfs:comment "Niveau de subjectivité libellé selon Mistral Small 4 (mistral-small-2603), lié à un élément de vocabulaire contrôlé"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteScore ;
     rdfs:isDefinedBy iwac: .
 
 iwac:mistralSmall2603SubjectiviteJustification a owl:DatatypeProperty ;
@@ -255,6 +329,7 @@ iwac:mistralSmall2603SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Mistral Small 4 - Justification subjectivité"@fr ;
     rdfs:comment "Mistral Small 4's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Mistral Small 4 pour le score de subjectivité"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -266,6 +341,7 @@ iwac:deepseekV4Flash0731Centralite a owl:ObjectProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Centralité"@fr ;
     rdfs:comment "Level of centrality of Islam/Muslims according to DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731)"@en ;
     rdfs:comment "Niveau de centralité de l'islam/musulmans selon DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731)"@fr ;
+    rdfs:subPropertyOf iwac:centralite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:deepseekV4Flash0731CentraliteJustification a owl:DatatypeProperty ;
@@ -273,6 +349,7 @@ iwac:deepseekV4Flash0731CentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Justification centralité"@fr ;
     rdfs:comment "DeepSeek V4 Flash 0731's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de DeepSeek V4 Flash 0731 pour le niveau de centralité attribué"@fr ;
+    rdfs:subPropertyOf iwac:centraliteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -281,6 +358,7 @@ iwac:deepseekV4Flash0731Polarite a owl:ObjectProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Polarité"@fr ;
     rdfs:comment "Sentiment toward Islam/Muslims according to DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731)"@en ;
     rdfs:comment "Sentiment envers l'islam/musulmans selon DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731)"@fr ;
+    rdfs:subPropertyOf iwac:polarite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:deepseekV4Flash0731PolariteJustification a owl:DatatypeProperty ;
@@ -288,6 +366,7 @@ iwac:deepseekV4Flash0731PolariteJustification a owl:DatatypeProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Justification polarité"@fr ;
     rdfs:comment "DeepSeek V4 Flash 0731's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de DeepSeek V4 Flash 0731 pour la polarité attribuée"@fr ;
+    rdfs:subPropertyOf iwac:polariteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -296,6 +375,7 @@ iwac:deepseekV4Flash0731SubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Score subjectivité"@fr ;
     rdfs:comment "Labelled subjectivity level according to DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731), linked to controlled vocabulary item"@en ;
     rdfs:comment "Niveau de subjectivité libellé selon DeepSeek V4 Flash 0731 (deepseek/deepseek-v4-flash-0731), lié à un élément de vocabulaire contrôlé"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteScore ;
     rdfs:isDefinedBy iwac: .
 
 iwac:deepseekV4Flash0731SubjectiviteJustification a owl:DatatypeProperty ;
@@ -303,6 +383,7 @@ iwac:deepseekV4Flash0731SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "DeepSeek V4 Flash 0731 - Justification subjectivité"@fr ;
     rdfs:comment "DeepSeek V4 Flash 0731's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de DeepSeek V4 Flash 0731 pour le score de subjectivité"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -314,6 +395,7 @@ iwac:qwen3827bCentralite a owl:ObjectProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Centralité"@fr ;
     rdfs:comment "Level of centrality of Islam/Muslims according to Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B)"@en ;
     rdfs:comment "Niveau de centralité de l'islam/musulmans selon Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B)"@fr ;
+    rdfs:subPropertyOf iwac:centralite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:qwen3827bCentraliteJustification a owl:DatatypeProperty ;
@@ -321,6 +403,7 @@ iwac:qwen3827bCentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Justification centralité"@fr ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour le niveau de centralité attribué"@fr ;
+    rdfs:subPropertyOf iwac:centraliteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -329,6 +412,7 @@ iwac:qwen3827bPolarite a owl:ObjectProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Polarité"@fr ;
     rdfs:comment "Sentiment toward Islam/Muslims according to Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B)"@en ;
     rdfs:comment "Sentiment envers l'islam/musulmans selon Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B)"@fr ;
+    rdfs:subPropertyOf iwac:polarite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:qwen3827bPolariteJustification a owl:DatatypeProperty ;
@@ -336,6 +420,7 @@ iwac:qwen3827bPolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Justification polarité"@fr ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour la polarité attribuée"@fr ;
+    rdfs:subPropertyOf iwac:polariteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -344,6 +429,7 @@ iwac:qwen3827bSubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Score subjectivité"@fr ;
     rdfs:comment "Labelled subjectivity level according to Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B), linked to controlled vocabulary item"@en ;
     rdfs:comment "Niveau de subjectivité libellé selon Qwen3.8 27B (self-hosted) (Qwen/Qwen3.8-27B), lié à un élément de vocabulaire contrôlé"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteScore ;
     rdfs:isDefinedBy iwac: .
 
 iwac:qwen3827bSubjectiviteJustification a owl:DatatypeProperty ;
@@ -351,6 +437,7 @@ iwac:qwen3827bSubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Qwen3.8 27B (self-hosted) - Justification subjectivité"@fr ;
     rdfs:comment "Qwen3.8 27B (self-hosted)'s explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Qwen3.8 27B (self-hosted) pour le score de subjectivité"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -362,6 +449,7 @@ iwac:claudeHaiku55Centralite a owl:ObjectProperty ;
     rdfs:label "Claude Haiku 5.5 - Centralité"@fr ;
     rdfs:comment "Level of centrality of Islam/Muslims according to Claude Haiku 5.5 (claude-haiku-5-5)"@en ;
     rdfs:comment "Niveau de centralité de l'islam/musulmans selon Claude Haiku 5.5 (claude-haiku-5-5)"@fr ;
+    rdfs:subPropertyOf iwac:centralite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:claudeHaiku55CentraliteJustification a owl:DatatypeProperty ;
@@ -369,6 +457,7 @@ iwac:claudeHaiku55CentraliteJustification a owl:DatatypeProperty ;
     rdfs:label "Claude Haiku 5.5 - Justification centralité"@fr ;
     rdfs:comment "Claude Haiku 5.5's explanation for the assigned centrality level"@en ;
     rdfs:comment "Explication de Claude Haiku 5.5 pour le niveau de centralité attribué"@fr ;
+    rdfs:subPropertyOf iwac:centraliteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -377,6 +466,7 @@ iwac:claudeHaiku55Polarite a owl:ObjectProperty ;
     rdfs:label "Claude Haiku 5.5 - Polarité"@fr ;
     rdfs:comment "Sentiment toward Islam/Muslims according to Claude Haiku 5.5 (claude-haiku-5-5)"@en ;
     rdfs:comment "Sentiment envers l'islam/musulmans selon Claude Haiku 5.5 (claude-haiku-5-5)"@fr ;
+    rdfs:subPropertyOf iwac:polarite ;
     rdfs:isDefinedBy iwac: .
 
 iwac:claudeHaiku55PolariteJustification a owl:DatatypeProperty ;
@@ -384,6 +474,7 @@ iwac:claudeHaiku55PolariteJustification a owl:DatatypeProperty ;
     rdfs:label "Claude Haiku 5.5 - Justification polarité"@fr ;
     rdfs:comment "Claude Haiku 5.5's explanation for the assigned polarity"@en ;
     rdfs:comment "Explication de Claude Haiku 5.5 pour la polarité attribuée"@fr ;
+    rdfs:subPropertyOf iwac:polariteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
 
@@ -392,6 +483,7 @@ iwac:claudeHaiku55SubjectiviteScore a owl:ObjectProperty ;
     rdfs:label "Claude Haiku 5.5 - Score subjectivité"@fr ;
     rdfs:comment "Labelled subjectivity level according to Claude Haiku 5.5 (claude-haiku-5-5), linked to controlled vocabulary item"@en ;
     rdfs:comment "Niveau de subjectivité libellé selon Claude Haiku 5.5 (claude-haiku-5-5), lié à un élément de vocabulaire contrôlé"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteScore ;
     rdfs:isDefinedBy iwac: .
 
 iwac:claudeHaiku55SubjectiviteJustification a owl:DatatypeProperty ;
@@ -399,6 +491,6 @@ iwac:claudeHaiku55SubjectiviteJustification a owl:DatatypeProperty ;
     rdfs:label "Claude Haiku 5.5 - Justification subjectivité"@fr ;
     rdfs:comment "Claude Haiku 5.5's explanation for the subjectivity score"@en ;
     rdfs:comment "Explication de Claude Haiku 5.5 pour le score de subjectivité"@fr ;
+    rdfs:subPropertyOf iwac:subjectiviteJustification ;
     rdfs:range rdf:langString ;
     rdfs:isDefinedBy iwac: .
-
